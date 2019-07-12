@@ -20,22 +20,21 @@ void Calibration::paintEvent(QPaintEvent *)
     int w = this->width();
     int h = this->height();
 
-    QRectF ir1(w-.75*w, h-.75*h, 25.0, 25.0);
-
+    QRectF ir1(w-.80*w, h-.75*h, 25.0, 25.0);
     QRectF ir2(w-.50*w, h-.75*h, 25.0, 25.0);
-    QRectF ir3(w-.25*w, h-.75*h, 25.0, 25.0);
+    QRectF ir3(w-.20*w, h-.75*h, 25.0, 25.0);
 
-    QRectF ir4(w-.75*w, h-.25*h, 25.0, 25.0);
+    QRectF ir4(w-.80*w, h-.25*h, 25.0, 25.0);
     QRectF ir5(w-.50*w, h-.25*h, 25.0, 25.0);
-    QRectF ir6(w-.25*w, h-.25*h, 25.0, 25.0);
+    QRectF ir6(w-.20*w, h-.25*h, 25.0, 25.0);
 
-    QRectF or1(ir1.x() - 37.5, ir1.y() - 37.5, 100.0, 100.0);
-    QRectF or2(ir2.x() - 37.5, ir2.y() - 37.5, 100.0, 100.0);
-    QRectF or3(ir3.x() - 37.5, ir3.y() - 37.5, 100.0, 100.0);
+    QRectF or1(ir1.x() - 62.5, ir1.y() - 62.5, 150.0, 150.0);
+    QRectF or2(ir2.x() - 62.5, ir2.y() - 62.5, 150.0, 150.0);
+    QRectF or3(ir3.x() - 62.5, ir3.y() - 62.5, 150.0, 150.0);
 
-    QRectF or4(ir4.x() - 37.5, ir4.y() - 37.5, 100.0, 100.0);
-    QRectF or5(ir5.x() - 37.5, ir5.y() - 37.5, 100.0, 100.0);
-    QRectF or6(ir6.x() - 37.5, ir6.y() - 37.5, 100.0, 100.0);
+    QRectF or4(ir4.x() - 62.5, ir4.y() - 62.5, 150.0, 150.0);
+    QRectF or5(ir5.x() - 62.5, ir5.y() - 62.5, 150.0, 150.0);
+    QRectF or6(ir6.x() - 62.5, ir6.y() - 62.5, 150.0, 150.0);
 
     QPainter painter(this);
 

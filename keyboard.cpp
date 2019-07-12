@@ -245,7 +245,7 @@ void Keyboard::calibrationButtonClicked()
     cal.setStyleSheet("background-color:black;");
     cal.setGeometry(200,200,800,600);
 
-   // cal.showFullScreen();
+    cal.showFullScreen();
     cal.setModal(true);
     cal.exec();
 
