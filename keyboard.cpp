@@ -15,6 +15,7 @@ Keyboard::Keyboard(QWidget *parent)
 
 /*  Create text display  */
     calibrationFlag = 0;
+    shiftFlag = 1;
     //display = new TextEdit;
     display = new QTextEdit("");
     display->setReadOnly(true);
@@ -54,6 +55,7 @@ Keyboard::Keyboard(QWidget *parent)
     numberRowButtons[11] = createButton(tr("+"), SLOT(characterClicked()));
     numberRowButtons[12] = createButton(tr("="), SLOT(characterClicked()));
 
+/*  QWERTY Keyboard
     characterButtons[0] = createButton(tr("Q"), SLOT(characterClicked()));
     characterButtons[1] = createButton(tr("W"), SLOT(characterClicked()));
     characterButtons[2] = createButton(tr("E"), SLOT(characterClicked()));
@@ -83,12 +85,38 @@ Keyboard::Keyboard(QWidget *parent)
     characterButtons[26] = createButton(tr(","), SLOT(characterClicked()));
     characterButtons[27] = createButton(tr("."), SLOT(characterClicked()));
     characterButtons[28] = createButton(tr("/"), SLOT(characterClicked()));
+*/
 
-    for (int i = 0; i < 26; ++i)
-    {
-        QString text = characterButtons[i]->text();
-        characterButtons[i]->setText(text.toLower());
-    }
+/*  ABC Keyboard  */
+    characterButtons[0] = createButton(tr("A"), SLOT(characterClicked()));
+    characterButtons[1] = createButton(tr("B"), SLOT(characterClicked()));
+    characterButtons[2] = createButton(tr("C"), SLOT(characterClicked()));
+    characterButtons[3] = createButton(tr("D"), SLOT(characterClicked()));
+    characterButtons[4] = createButton(tr("E"), SLOT(characterClicked()));
+    characterButtons[5] = createButton(tr("F"), SLOT(characterClicked()));
+    characterButtons[6] = createButton(tr("G"), SLOT(characterClicked()));
+    characterButtons[7] = createButton(tr("H"), SLOT(characterClicked()));
+    characterButtons[8] = createButton(tr("I"), SLOT(characterClicked()));
+    characterButtons[9] = createButton(tr("J"), SLOT(characterClicked()));
+    characterButtons[10] = createButton(tr("K"), SLOT(characterClicked()));
+    characterButtons[11] = createButton(tr("L"), SLOT(characterClicked()));
+    characterButtons[12] = createButton(tr("M"), SLOT(characterClicked()));
+    characterButtons[13] = createButton(tr("N"), SLOT(characterClicked()));
+    characterButtons[14] = createButton(tr("O"), SLOT(characterClicked()));
+    characterButtons[15] = createButton(tr("P"), SLOT(characterClicked()));
+    characterButtons[16] = createButton(tr("Q"), SLOT(characterClicked()));
+    characterButtons[17] = createButton(tr("R"), SLOT(characterClicked()));
+    characterButtons[18] = createButton(tr("S"), SLOT(characterClicked()));
+    characterButtons[19] = createButton(tr("T"), SLOT(characterClicked()));
+    characterButtons[20] = createButton(tr("U"), SLOT(characterClicked()));
+    characterButtons[21] = createButton(tr("V"), SLOT(characterClicked()));
+    characterButtons[22] = createButton(tr("W"), SLOT(characterClicked()));
+    characterButtons[23] = createButton(tr("X"), SLOT(characterClicked()));
+    characterButtons[24] = createButton(tr("Y"), SLOT(characterClicked()));
+    characterButtons[25] = createButton(tr("Z"), SLOT(characterClicked()));
+    characterButtons[26] = createButton(tr(","), SLOT(characterClicked()));
+    characterButtons[27] = createButton(tr("."), SLOT(characterClicked()));
+    characterButtons[28] = createButton(tr("/"), SLOT(characterClicked()));
 
     Button *spacebar = createButton(tr(" "), SLOT(characterClicked()));
 
