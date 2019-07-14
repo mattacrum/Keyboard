@@ -275,8 +275,12 @@ void Keyboard::calibrationButtonClicked()
     cal.setGeometry(200,200,800,600);
 
     //cal.showFullScreen();
-    cal.setModal(true);
-    cal.exec();
+    if (timerCount == 6)
+    {
+        cal.setModal(true);
+        cal.exec();
+
+    }
 
    // while(1)
    // {
