@@ -21,16 +21,41 @@ QSize Button::sizeHint() const
 
 void Button::hoverEnter(QHoverEvent *)
 {
+    QFont font = this->font();
+    font.setBold(true);
+    font.setPointSize(12);
+    this->setFont(font);
+    repaint();
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTimeout()));
 
     if(!timer->isActive())
-        timer->start(2000);
+        timer->start(1200);
 }
 
 void Button::timerTimeout()
 {
     this->animateClick();
+}
+
+void Button::hoverLeave(QHoverEvent *)
+{
+    timer->stop();
+
+    QFont font = this->font();
+    font.setPointSize(10);
+    font.setBold(false);
+    this->setFont(font);
+    repaint();
+}
+
+void Button::hoverMove(QHoverEvent *)
+{
+    QFont font = this->font();
+    font.setBold(true);
+    font.setPointSize(12);
+    this->setFont(font);
+    repaint();
 }
 
 bool Button::event(QEvent *event)
@@ -53,21 +78,4 @@ bool Button::event(QEvent *event)
         break;
     }
     return QWidget::event(event);
-}
-
-void Button::hoverLeave(QHoverEvent *)
-{
-    timer->stop();
-    QFont font = this->font();
-    font.setBold(false);
-    this->setFont(font);
-    repaint();
-}
-
-void Button::hoverMove(QHoverEvent *)
-{
-    QFont font = this->font();
-    font.setBold(true);
-    this->setFont(font);
-    repaint();
 }
