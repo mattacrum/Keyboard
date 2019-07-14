@@ -42,6 +42,9 @@ private:
 
     Calibration *Cal;
 
+   // QKeyEvent *event;
+    int timerCount;
+
     enum { NumCharButtons = 29 };
     Button *characterButtons[NumCharButtons];
 

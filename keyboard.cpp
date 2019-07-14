@@ -240,14 +240,22 @@ Button *Keyboard::createButton(const QString &text, const char *member)
 void Keyboard::calibrationButtonClicked()
 {
     calibrationFlag = 1;
-    hide();
+   // hide();
     Calibration cal;
+    timerCount = 6;
     cal.setStyleSheet("background-color:black;");
     cal.setGeometry(200,200,800,600);
 
-    cal.showFullScreen();
+    //cal.showFullScreen();
     cal.setModal(true);
     cal.exec();
+
+   // while(1)
+   // {
+      //  if (event->key() == Qt::Key_Escape)
+      //      cal.hide();
+
+   // }
 
 
 

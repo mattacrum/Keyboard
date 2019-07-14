@@ -1,5 +1,5 @@
 #include "calibration.h"
-//#include "keyboard.h"
+#include "keyboard.h"
 #include "button.h"
 #include <QtWidgets>
 #include <QTimer>
@@ -9,10 +9,18 @@
 Calibration::Calibration(QWidget *parent)
     : QDialog(parent)
 {
-
     QGridLayout *mainLayout = new QGridLayout;
     setLayout(mainLayout);
     setWindowTitle(tr("Calibration"));
+
+
+    timer = new QTimer(this);
+    timer->setInterval(3000);
+    timerCount = 6;
+    connect(timer, SIGNAL(timeout()), this, SLOT(timerTimeout()));
+
+    if(!timer->isActive())
+        timer->start();
 }
 
 void Calibration::paintEvent(QPaintEvent *)
@@ -36,33 +44,84 @@ void Calibration::paintEvent(QPaintEvent *)
     QRectF or5(ir5.x() - 62.5, ir5.y() - 62.5, 150.0, 150.0);
     QRectF or6(ir6.x() - 62.5, ir6.y() - 62.5, 150.0, 150.0);
 
+    QRectF fp1[2] = {ir1,or1};
+    QRectF fp2[2] = {ir2,or2};
+    QRectF fp3[2] = {ir3,or3};
+    QRectF fp4[2] = {ir4,or4};
+    QRectF fp5[2] = {ir5,or5};
+    QRectF fp6[2] = {ir6,or6};
+
+    drawFocusPoints(fp1,fp2,fp3,fp4,fp5,fp6);
+
+}
+
+void Calibration::timerTimeout()
+{
+    --timerCount;
+    if (timerCount <= -1)
+    {
+        timer->stop();
+        hide();
+    }
+}
+
+void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRectF fp4[], QRectF fp5[], QRectF fp6[])
+{
     QPainter painter(this);
 
-    //QTimer *timer = new QTimer(this);
-   // connect(timer, &QTimer::timeout, this, QOverload<>::of(&AnalogClock::update));
+    if (timerCount == 5)
+    {
+           painter.setBrush(Qt::black);
+           painter.setPen(QPen(Qt::white, 2));
+           painter.drawEllipse(fp1[1]);
+           painter.setBrush(Qt::white);
+           painter.drawEllipse(fp1[0]);
+    }
 
+    if (timerCount == 4)
+    {
+           painter.setBrush(Qt::black);
+           painter.setPen(QPen(Qt::white, 2));
+           painter.drawEllipse(fp2[1]);
+           painter.setBrush(Qt::white);
+           painter.drawEllipse(fp2[0]);
+    }
 
-    //timer->start(12000);
-    //if (timer->remainingTime() == 6000)
+    if (timerCount == 3)
+    {
+           painter.setBrush(Qt::black);
+           painter.setPen(QPen(Qt::white, 2));
+           painter.drawEllipse(fp3[1]);
+           painter.setBrush(Qt::white);
+           painter.drawEllipse(fp3[0]);
+    }
 
-    painter.setBrush(Qt::black);
-    painter.setPen(QPen(Qt::white, 2));
-    painter.drawEllipse(or1);
-    painter.drawEllipse(or2);
-    painter.drawEllipse(or3);
+    if (timerCount == 2)
+    {
+           painter.setBrush(Qt::black);
+           painter.setPen(QPen(Qt::white, 2));
+           painter.drawEllipse(fp4[1]);
+           painter.setBrush(Qt::white);
+           painter.drawEllipse(fp4[0]);
+    }
 
-    painter.drawEllipse(or4);
-    painter.drawEllipse(or5);
-    painter.drawEllipse(or6);
+    if (timerCount == 1)
+    {
+           painter.setBrush(Qt::black);
+           painter.setPen(QPen(Qt::white, 2));
+           painter.drawEllipse(fp5[1]);
+           painter.setBrush(Qt::white);
+           painter.drawEllipse(fp5[0]);
+    }
 
-    painter.setBrush(Qt::white);
-    painter.drawEllipse(ir1);
-    painter.drawEllipse(ir2);
-    painter.drawEllipse(ir3);
+    if (timerCount == 0)
+    {
+           painter.setBrush(Qt::black);
+           painter.setPen(QPen(Qt::white, 2));
+           painter.drawEllipse(fp6[1]);
+           painter.setBrush(Qt::white);
+           painter.drawEllipse(fp6[0]);
+    }
 
-    painter.drawEllipse(ir4);
-    painter.drawEllipse(ir5);
-    painter.drawEllipse(ir6);
-
-
+    this->update();
 }

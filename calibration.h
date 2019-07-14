@@ -13,9 +13,14 @@ class Calibration : public QDialog
 
 public:
     Calibration(QWidget *parent = nullptr);
-
+private slots:
+    void timerTimeout();
 private:
     void paintEvent(QPaintEvent *event);
+
+    void drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRectF fp4[], QRectF fp5[], QRectF fp6[]);
+    QTimer *timer;
+    int timerCount;
     QGridLayout *mainLayout;
 };
 
