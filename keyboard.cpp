@@ -136,6 +136,7 @@ Keyboard::Keyboard(QWidget *parent)
 
     Button *newLineButton = createButton(tr("<-------"), SLOT(newLineButtonClicked()));
     Button *calibrationButton = createButton(tr("Calibrate"), SLOT(calibrationButtonClicked()));
+    calibrationButton->setMinimumWidth(120);
 /*
  *
  * Add Widgets to Layout
