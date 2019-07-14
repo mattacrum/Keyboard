@@ -11,6 +11,18 @@ public:
     explicit Button(const QString &text, QWidget *parent = nullptr);
 
     QSize sizeHint() const override;
+
+private:
+    QTimer *timer;
+
+private slots:
+    void timerTimeout();
+
+protected:
+void hoverEnter(QHoverEvent *event);
+void hoverLeave(QHoverEvent *event);
+void hoverMove(QHoverEvent *event);
+bool event(QEvent *event);
 };
 
 #endif
