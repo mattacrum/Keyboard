@@ -13,7 +13,7 @@ public:
     QSize sizeHint() const override;
 
 private:
-    QTimer *timer;
+    QTimer *dwellTimer;
 
 private slots:
     void timerTimeout();

@@ -268,29 +268,17 @@ Button *Keyboard::createButton(const QString &text, const char *member)
 void Keyboard::calibrationButtonClicked()
 {
     calibrationFlag = 1;
-   // hide();
+    hide();
     Calibration cal;
     timerCount = 6;
     cal.setStyleSheet("background-color:black;");
-    cal.setGeometry(200,200,800,600);
+    cal.setGeometry(0,0,1400,1050);
 
-    //cal.showFullScreen();
-    if (timerCount == 6)
-    {
-        cal.setModal(true);
-        cal.exec();
+   //cal.showFullScreen();
 
-    }
-
-   // while(1)
-   // {
-      //  if (event->key() == Qt::Key_Escape)
-      //      cal.hide();
-
-   // }
-
-
-
+    cal.setModal(true);
+    cal.exec();
+    show();
 
 }
 
