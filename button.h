@@ -16,7 +16,7 @@ private:
     QTimer *dwellTimer;
 
 private slots:
-    void timerTimeout();
+    void dwellTimerTimeout();
 
 protected:
 void hoverEnter(QHoverEvent *event);

@@ -27,22 +27,20 @@ void Button::hoverEnter(QHoverEvent *)
     this->setFont(font);
     repaint();
     dwellTimer = new QTimer(this);
-    connect(dwellTimer, SIGNAL(timeout()), this, SLOT(timerTimeout()));
+    connect(dwellTimer, SIGNAL(timeout()), this, SLOT(dwellTimerTimeout()));
 
-   // if(!dwellTimer->isActive())
+    if(!dwellTimer->isActive())
         dwellTimer->start(1200);
 }
 
-void Button::timerTimeout()
+void Button::dwellTimerTimeout()
 {
-
-     this->animateClick();
+      this->animateClick();
 }
 
 void Button::hoverLeave(QHoverEvent *)
 {
     dwellTimer->stop();
-
     QFont font = this->font();
     font.setPointSize(10);
     font.setBold(false);
@@ -52,6 +50,7 @@ void Button::hoverLeave(QHoverEvent *)
 
 void Button::hoverMove(QHoverEvent *)
 {
+
     QFont font = this->font();
     font.setBold(true);
     font.setPointSize(12);

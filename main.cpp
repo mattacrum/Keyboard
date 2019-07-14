@@ -16,6 +16,8 @@ int main(int argc, char *argv[])
    // {
     //   int c = KB.calibrationFlag;
     //   if (c == 0)
+    KB.setGeometry(0, 0, 1400, 1050);
+
             KB.show();
      //   else if (c == 1)
         //    CAL.showFullScreen();

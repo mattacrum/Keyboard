@@ -21,7 +21,8 @@ Keyboard::Keyboard(QWidget *parent)
     display->setReadOnly(true);
     display->setAlignment(Qt::AlignLeft);
     display->setMinimumHeight(100);
-    display->setMaximumWidth(830);
+    display->setMaximumHeight(300);
+    display->setMaximumWidth(1400);
     QFont font = display->font();
     font.setPointSize(font.pointSize() + 8);
     display->setFont(font);
@@ -124,7 +125,7 @@ Keyboard::Keyboard(QWidget *parent)
     backspaceButton->setMinimumWidth(120);
 
     Button *pauseButton = createButton(tr("Pause"), SLOT(characterClicked()));
-    pauseButton->setMinimumWidth(120);
+   // pauseButton->setMinimumWidth(120);
 
     Button *speakButton = createButton(tr("Speak"), SLOT(speakButtonClicked()));
 
@@ -136,7 +137,7 @@ Keyboard::Keyboard(QWidget *parent)
 
     Button *newLineButton = createButton(tr("<-------"), SLOT(newLineButtonClicked()));
     Button *calibrationButton = createButton(tr("Calibrate"), SLOT(calibrationButtonClicked()));
-    calibrationButton->setMinimumWidth(120);
+   // calibrationButton->setMinimumWidth(120);
 /*
  *
  * Add Widgets to Layout
@@ -145,16 +146,16 @@ Keyboard::Keyboard(QWidget *parent)
 */
 
     QGridLayout *mainLayout = new QGridLayout;
-    mainLayout->setSizeConstraint(QLayout::SetFixedSize);
-    mainLayout->addWidget(display, 0, 0, 1, 15);
+   // mainLayout->setSizeConstraint(QLayout::SetFixedSize);
+    mainLayout->addWidget(display, 0, 0, 1, 13);
     mainLayout->addWidget(backspaceButton, 1, 13,1,2);
     mainLayout->addWidget(spacebar,5,3,1,5);
     mainLayout->addWidget(shiftButton, 5, 1, 1,2);
-    mainLayout->addWidget(pauseButton, 2, 11,1,2);
-    mainLayout->addWidget(speakButton, 3, 11,1,2);
-    mainLayout->addWidget(newLineButton, 4, 11,1,2);
-    mainLayout->addWidget(clearAllButton, 0, 12);
-    mainLayout->addWidget(calibrationButton, 5, 8);
+    mainLayout->addWidget(pauseButton, 2, 13,1,2);
+    mainLayout->addWidget(speakButton, 3, 13,1,2);
+    mainLayout->addWidget(newLineButton, 4, 13,1,2);
+    mainLayout->addWidget(clearAllButton, 0, 13,1,2);
+    mainLayout->addWidget(calibrationButton, 5, 8, 1, 2);
 
     for( int i = 0; i < NumNumberRowButtons; ++i)
     {
@@ -170,8 +171,6 @@ Keyboard::Keyboard(QWidget *parent)
 
     setLayout(mainLayout);
     setWindowTitle(tr("Keyboard"));
-
-
 }
 
 /*
@@ -206,7 +205,6 @@ void Keyboard::backspaceClicked()
     text.chop(1);
     if (text.isEmpty()) {
         text = "";
-
     }
     display->setText(text);
 }
@@ -268,6 +266,7 @@ Button *Keyboard::createButton(const QString &text, const char *member)
 
 void Keyboard::calibrationButtonClicked()
 {
+
     calibrationFlag = 1;
     hide();
     Calibration cal;
@@ -282,6 +281,8 @@ void Keyboard::calibrationButtonClicked()
     show();
 
 }
+
+
 
 
 

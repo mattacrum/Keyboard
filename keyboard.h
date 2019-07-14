@@ -27,6 +27,7 @@ private slots:
     void shiftButtonClicked();
     void newLineButtonClicked();
     void calibrationButtonClicked();
+
   //  void autoComplete();
 
 private:
@@ -39,7 +40,7 @@ private:
    // QCompleter *completer;
 
     QTextEdit *display;
-
+    QTimer *delayTimer;
     Calibration *Cal;
 
    // QKeyEvent *event;
