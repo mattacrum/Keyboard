@@ -44,7 +44,6 @@ Keyboard::Keyboard(QWidget *parent)
  *
  *
 */
-
     numberRowButtons[0] = createButton(tr("1"), SLOT(characterClicked()));
     numberRowButtons[1] = createButton(tr("2"), SLOT(characterClicked()));
     numberRowButtons[2] = createButton(tr("3"), SLOT(characterClicked()));
@@ -137,6 +136,7 @@ Keyboard::Keyboard(QWidget *parent)
     Button *shiftButton = createButton(tr("Shift"), SLOT(shiftButtonClicked()));
 
     Button *newLineButton = createButton(tr("<-------"), SLOT(newLineButtonClicked()));
+
     Button *calibrationButton = createButton(tr("Calibrate"), SLOT(calibrationButtonClicked()));
 
 /*
@@ -145,7 +145,6 @@ Keyboard::Keyboard(QWidget *parent)
  *
  *
 */
-
     QGridLayout *mainLayout = new QGridLayout;
 
     mainLayout->setSizeConstraint(QLayout::SetFixedSize);
