@@ -15,6 +15,7 @@ Keyboard::Keyboard(QWidget *parent)
 
 /*  Create text display  */
     calibrationFlag = 0;
+    //pauseFlag = 0;
     shiftFlag = 1;
     //display = new TextEdit;
     display = new QTextEdit("");
@@ -126,20 +127,18 @@ Keyboard::Keyboard(QWidget *parent)
     Button *backspaceButton = createButton(tr("Backspace"), SLOT(backspaceClicked()));
     backspaceButton->setMinimumWidth(120);
 
-    Button *pauseButton = createButton(tr("Pause"), SLOT(characterClicked()));
-   // pauseButton->setMinimumWidth(120);
+    Button *pauseButton = createButton(tr("Pause"), SLOT(pauseButtonClicked()));
 
     Button *speakButton = createButton(tr("Speak"), SLOT(speakButtonClicked()));
 
     Button *clearAllButton = createButton(tr("Clear All"), SLOT(clearAllButtonClicked()));
-    clearAllButton->setMinimumWidth(120);
-   // clearAllButton->setMaximumHeight(60);
+    clearAllButton->setMaximumHeight(60);
 
     Button *shiftButton = createButton(tr("Shift"), SLOT(shiftButtonClicked()));
 
     Button *newLineButton = createButton(tr("<-------"), SLOT(newLineButtonClicked()));
     Button *calibrationButton = createButton(tr("Calibrate"), SLOT(calibrationButtonClicked()));
-   // calibrationButton->setMinimumWidth(120);
+
 /*
  *
  * Add Widgets to Layout
@@ -148,15 +147,17 @@ Keyboard::Keyboard(QWidget *parent)
 */
 
     QGridLayout *mainLayout = new QGridLayout;
-   // mainLayout->setSizeConstraint(QLayout::SetFixedSize);
-    mainLayout->addWidget(display, 0, 0, 1, 13);
-    mainLayout->addWidget(backspaceButton, 1, 13,1,2);
+
+    mainLayout->setSizeConstraint(QLayout::SetFixedSize);
+    mainLayout->addWidget(display, 0, 0, 1, 11);
+    mainLayout->addWidget(backspaceButton, 1, 13, 1, 2);
     mainLayout->addWidget(spacebar,5,3,1,5);
     mainLayout->addWidget(shiftButton, 5, 1, 1,2);
     mainLayout->addWidget(pauseButton, 2, 13,1,2);
     mainLayout->addWidget(speakButton, 3, 13,1,2);
     mainLayout->addWidget(newLineButton, 4, 13,1,2);
-    mainLayout->addWidget(clearAllButton, 0, 13,1,2);
+    mainLayout->addWidget(clearAllButton, 0, 11, 1, 4);
+    mainLayout->setAlignment(clearAllButton,Qt::AlignBottom);
     mainLayout->addWidget(calibrationButton, 5, 13, 1, 2);
 
     for( int i = 0; i < NumNumberRowButtons; ++i)
@@ -252,6 +253,11 @@ void Keyboard::newLineButtonClicked()
     display->setText(display->toPlainText() + "\n");
 }
 
+void Keyboard::pauseButtonClicked()
+{
+    //pauseFlag = 1;
+}
+
 /*  Function to create button  */
 
 Button *Keyboard::createButton(const QString &text, const char *member)
@@ -267,7 +273,14 @@ Button *Keyboard::createButton(const QString &text, const char *member)
     if (button->text() == "Clear All")
         button->setStyleSheet("background-color: red;"
                               "color: white;");
+    if (button->text() == "Backspace")
+        button->setStyleSheet("background-color: red;"
+                              "color: white;");
+    if (button->text() == "Pause")
+        button->setStyleSheet("background-color: orange;"
+                              "color: white;");
     connect(button, SIGNAL(clicked()), this, member);
+
     return button;
 }
 
@@ -276,7 +289,6 @@ Button *Keyboard::createButton(const QString &text, const char *member)
 
 void Keyboard::calibrationButtonClicked()
 {
-
     calibrationFlag = 1;
     hide();
     Calibration cal;
@@ -289,7 +301,6 @@ void Keyboard::calibrationButtonClicked()
     cal.setModal(true);
     cal.exec();
     show();
-
 }
 
 

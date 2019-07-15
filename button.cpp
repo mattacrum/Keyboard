@@ -6,6 +6,8 @@ Button::Button(const QString &text, QWidget *parent)
     : QToolButton(parent)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    QFont font = this->font();
+    font.setPointSize(12);
     setText(text);
     setMouseTracking(true);
     setAttribute(Qt::WA_Hover);
@@ -21,16 +23,20 @@ QSize Button::sizeHint() const
 
 void Button::hoverEnter(QHoverEvent *)
 {
-    QFont font = this->font();
-    font.setBold(true);
-    font.setPointSize(16);
-    this->setFont(font);
-    repaint();
-    dwellTimer = new QTimer(this);
-    connect(dwellTimer, SIGNAL(timeout()), this, SLOT(dwellTimerTimeout()));
+   // if (pauseFlag == 0)
+   // {
+        QFont font = this->font();
+        font.setBold(true);
+        font.setPointSize(16);
+        this->setFont(font);
+        repaint();
+        dwellTimer = new QTimer(this);
+        connect(dwellTimer, SIGNAL(timeout()), this, SLOT(dwellTimerTimeout()));
 
-    if(!dwellTimer->isActive())
-        dwellTimer->start(1200);
+        if(!dwellTimer->isActive())
+            dwellTimer->start(1200);
+  //  }
+
 }
 
 void Button::dwellTimerTimeout()
@@ -42,7 +48,7 @@ void Button::hoverLeave(QHoverEvent *)
 {
     dwellTimer->stop();
     QFont font = this->font();
-    font.setPointSize(10);
+    font.setPointSize(12);
     font.setBold(false);
     this->setFont(font);
     repaint();
@@ -50,7 +56,13 @@ void Button::hoverLeave(QHoverEvent *)
 
 void Button::hoverMove(QHoverEvent *)
 {
-
+  /*  if (this->text() == "Pause")
+    {
+        if (dwellTimer->remainingTime() == 0)
+        {
+            pauseFlag = 1;
+        }
+    }*/
     QFont font = this->font();
     font.setBold(true);
     font.setPointSize(16);

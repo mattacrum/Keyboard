@@ -19,6 +19,7 @@ public:
    Keyboard(QWidget *parent = nullptr);
    int calibrationFlag;
 
+
 private slots:
     void characterClicked();
     void backspaceClicked();
@@ -27,6 +28,7 @@ private slots:
     void shiftButtonClicked();
     void newLineButtonClicked();
     void calibrationButtonClicked();
+    void pauseButtonClicked();
 
   //  void autoComplete();
 

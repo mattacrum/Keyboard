@@ -1,6 +1,6 @@
 #ifndef BUTTON_H
 #define BUTTON_H
-
+#include "keyboard.h"
 #include <QToolButton>
 
 class Button : public QToolButton
@@ -14,6 +14,7 @@ public:
 
 private:
     QTimer *dwellTimer;
+    int pauseFlag;
 
 private slots:
     void dwellTimerTimeout();
