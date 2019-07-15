@@ -13,7 +13,6 @@ Calibration::Calibration(QWidget *parent)
     setLayout(mainLayout);
     setWindowTitle(tr("Calibration"));
 
-
     timer = new QTimer(this);
     timer->setInterval(3000);
     timerCount = 6;
