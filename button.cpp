@@ -23,7 +23,7 @@ void Button::hoverEnter(QHoverEvent *)
 {
     QFont font = this->font();
     font.setBold(true);
-    font.setPointSize(12);
+    font.setPointSize(16);
     this->setFont(font);
     repaint();
     dwellTimer = new QTimer(this);
@@ -53,7 +53,7 @@ void Button::hoverMove(QHoverEvent *)
 
     QFont font = this->font();
     font.setBold(true);
-    font.setPointSize(12);
+    font.setPointSize(16);
     this->setFont(font);
     repaint();
 }

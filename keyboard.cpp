@@ -20,6 +20,8 @@ Keyboard::Keyboard(QWidget *parent)
     display = new QTextEdit("");
     display->setReadOnly(true);
     display->setAlignment(Qt::AlignLeft);
+    display->setStyleSheet("background-color:white;"
+                           "color:black;");
     display->setMinimumHeight(100);
     display->setMaximumHeight(300);
     display->setMaximumWidth(1400);
@@ -155,7 +157,7 @@ Keyboard::Keyboard(QWidget *parent)
     mainLayout->addWidget(speakButton, 3, 13,1,2);
     mainLayout->addWidget(newLineButton, 4, 13,1,2);
     mainLayout->addWidget(clearAllButton, 0, 13,1,2);
-    mainLayout->addWidget(calibrationButton, 5, 8, 1, 2);
+    mainLayout->addWidget(calibrationButton, 5, 13, 1, 2);
 
     for( int i = 0; i < NumNumberRowButtons; ++i)
     {
@@ -257,6 +259,14 @@ Button *Keyboard::createButton(const QString &text, const char *member)
 
     Button *button = new Button(text);
     button->setMinimumSize(60,60);
+    button->setStyleSheet("background-color: blue;"
+                          "color: white;");
+    if (button->text() == "Speak")
+        button->setStyleSheet("background-color: green;"
+                              "color: white;");
+    if (button->text() == "Clear All")
+        button->setStyleSheet("background-color: red;"
+                              "color: white;");
     connect(button, SIGNAL(clicked()), this, member);
     return button;
 }

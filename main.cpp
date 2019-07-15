@@ -8,21 +8,12 @@ int main(int argc, char *argv[])
    // Q_INIT_RESOURCE(customcompleter);
     QApplication app(argc, argv);
     Keyboard KB;
-//    Calibration CAL;
-
-   // KB.setFixedSize(800,600);
-
-   // while(1)
-   // {
-    //   int c = KB.calibrationFlag;
-    //   if (c == 0)
+    KB.setStyleSheet("background-color: black");
+    QApplication::setStyle("fusion");
     KB.setGeometry(0, 0, 1400, 1050);
 
-            KB.show();
-     //   else if (c == 1)
-        //    CAL.showFullScreen();
-
+    KB.show();
 
     return app.exec();
-   // }
+
 }
