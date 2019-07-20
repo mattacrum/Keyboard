@@ -36,8 +36,8 @@ SOURCES += \
 HEADERS += \
         button.h \
         calibration.h \
-        keyboard.h \
-       # textedit.h
+        keyboard.h
+        # textedit.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

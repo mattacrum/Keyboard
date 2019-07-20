@@ -20,6 +20,7 @@ public:
    int calibrationFlag;
 
 
+
 private slots:
     void characterClicked();
     void backspaceClicked();

@@ -13,15 +13,28 @@ class Calibration : public QDialog
 
 public:
     Calibration(QWidget *parent = nullptr);
+    QPoint *mousePosError;
 private slots:
     void timerTimeout();
+
 private:
     void paintEvent(QPaintEvent *event);
-
+    void calibrate();
+    void returnToKeyboard(QKeyEvent *event);
+    QTextEdit *display;
+    int center[2];  // <--- Crashes if I comment this out?
     void drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRectF fp4[], QRectF fp5[], QRectF fp6[]);
     QTimer *timer;
     int timerCount;
+    QCursor *cursor;
     QGridLayout *mainLayout;
+
+    int coordinateError1[2];
+    int coordinateError2[2];
+    int coordinateError3[2];
+    int coordinateError4[2];
+    int coordinateError5[2];
+    int coordinateError6[2];
 };
 
 #endif // CALIBRATION_H

@@ -6,12 +6,23 @@
 #include <QWidget>
 #include <QGraphicsEllipseItem>
 
+
 Calibration::Calibration(QWidget *parent)
     : QDialog(parent)
 {
     QGridLayout *mainLayout = new QGridLayout;
     setLayout(mainLayout);
     setWindowTitle(tr("Calibration"));
+    cursor = new QCursor();
+
+    display = new QTextEdit("");
+    display->setReadOnly(true);
+    display->setStyleSheet("background-color:white;"
+                           "color:black;");
+    display->setGeometry(500, 0, 120, 60);
+    display->setMaximumSize(120,60);
+
+    mainLayout->addWidget(display);
 
     timer = new QTimer(this);
     timer->setInterval(3000);
@@ -35,6 +46,7 @@ void Calibration::paintEvent(QPaintEvent *)
     QRectF ir5(w-.50*w, h-.25*h, 25.0, 25.0);
     QRectF ir6(w-.20*w, h-.25*h, 25.0, 25.0);
 
+
     QRectF or1(ir1.x() - 62.5, ir1.y() - 62.5, 150.0, 150.0);
     QRectF or2(ir2.x() - 62.5, ir2.y() - 62.5, 150.0, 150.0);
     QRectF or3(ir3.x() - 62.5, ir3.y() - 62.5, 150.0, 150.0);
@@ -52,6 +64,7 @@ void Calibration::paintEvent(QPaintEvent *)
 
     drawFocusPoints(fp1,fp2,fp3,fp4,fp5,fp6);
 
+
 }
 
 void Calibration::timerTimeout()
@@ -60,6 +73,7 @@ void Calibration::timerTimeout()
     if (timerCount <= -1)
     {
         timer->stop();
+        calibrate();
         hide();
     }
 }
@@ -68,6 +82,7 @@ void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRec
 {
     QPainter painter(this);
 
+
     if (timerCount == 5)
     {
            painter.setBrush(Qt::black);
@@ -75,6 +90,16 @@ void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRec
            painter.drawEllipse(fp1[1]);
            painter.setBrush(Qt::white);
            painter.drawEllipse(fp1[0]);
+
+           coordinateError1[0] = (int)fp1[1].center().x() - QCursor::pos().x();
+           coordinateError1[1] = (int)fp1[1].center().y() - QCursor::pos().y();
+
+
+           display->setText("(" + QString::number((int)fp1[1].center().x()) + ", " +
+                            QString::number((int)fp1[1].center().y()) + ")" +
+                            " - " + "(" + QString::number(QCursor::pos().x()) + ", " +
+                            QString::number(QCursor::pos().y()) + ")");
+
     }
 
     if (timerCount == 4)
@@ -84,6 +109,15 @@ void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRec
            painter.drawEllipse(fp2[1]);
            painter.setBrush(Qt::white);
            painter.drawEllipse(fp2[0]);
+
+           coordinateError2[0] = (int)fp2[1].center().x() - QCursor::pos().x();
+           coordinateError2[1] = (int)fp2[1].center().y() - QCursor::pos().y();
+
+
+           display->setText("(" + QString::number((int)fp2[1].center().x()) + ", " +
+                            QString::number((int)fp2[1].center().y()) + ")" +
+                            " - " + "(" + QString::number(QCursor::pos().x()) + ", " +
+                            QString::number(QCursor::pos().y()) + ")");
     }
 
     if (timerCount == 3)
@@ -93,6 +127,15 @@ void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRec
            painter.drawEllipse(fp3[1]);
            painter.setBrush(Qt::white);
            painter.drawEllipse(fp3[0]);
+
+           coordinateError3[0] = (int)fp3[1].center().x() - QCursor::pos().x();
+           coordinateError3[1] = (int)fp3[1].center().y() - QCursor::pos().y();
+
+
+           display->setText("(" + QString::number((int)fp3[1].center().x()) + ", " +
+                            QString::number((int)fp3[1].center().y()) + ")" +
+                            " - " + "(" + QString::number(QCursor::pos().x()) + ", " +
+                            QString::number(QCursor::pos().y()) + ")");
     }
 
     if (timerCount == 2)
@@ -102,6 +145,15 @@ void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRec
            painter.drawEllipse(fp4[1]);
            painter.setBrush(Qt::white);
            painter.drawEllipse(fp4[0]);
+
+           coordinateError4[0] = (int)fp4[1].center().x() - QCursor::pos().x();
+           coordinateError4[1] = (int)fp4[1].center().y() - QCursor::pos().y();
+
+
+           display->setText("(" + QString::number((int)fp4[1].center().x()) + ", " +
+                            QString::number((int)fp4[1].center().y()) + ")" +
+                            " - " + "(" + QString::number(QCursor::pos().x()) + ", " +
+                            QString::number(QCursor::pos().y()) + ")");
     }
 
     if (timerCount == 1)
@@ -111,6 +163,15 @@ void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRec
            painter.drawEllipse(fp5[1]);
            painter.setBrush(Qt::white);
            painter.drawEllipse(fp5[0]);
+
+           coordinateError5[0] = (int)fp5[1].center().x() - QCursor::pos().x();
+           coordinateError5[1] = (int)fp5[1].center().y() - QCursor::pos().y();
+
+
+           display->setText("(" + QString::number((int)fp5[1].center().x()) + ", " +
+                            QString::number((int)fp5[1].center().y()) + ")" +
+                            " - " + "(" + QString::number(QCursor::pos().x()) + ", " +
+                            QString::number(QCursor::pos().y()) + ")");
     }
 
     if (timerCount == 0)
@@ -120,7 +181,46 @@ void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRec
            painter.drawEllipse(fp6[1]);
            painter.setBrush(Qt::white);
            painter.drawEllipse(fp6[0]);
+
+           coordinateError6[0] = (int)fp6[1].center().x() - QCursor::pos().x();
+           coordinateError6[1] = (int)fp6[1].center().y() - QCursor::pos().y();
+
+
+           display->setText("(" + QString::number((int)fp6[1].center().x()) + ", " +
+                            QString::number((int)fp6[1].center().y()) + ")" +
+                            " - " + "(" + QString::number(QCursor::pos().x()) + ", " +
+                            QString::number(QCursor::pos().y()) + ")");
     }
 
     this->update();
+
+}
+
+
+void Calibration::calibrate()
+{
+    int x = ((coordinateError1[0] + coordinateError2[0] + coordinateError3[0]
+           + coordinateError4[0] + coordinateError5[0] + coordinateError6[0]) / 6) ;
+
+    int y = ((coordinateError1[1] + coordinateError2[1] + coordinateError3[1]
+             + coordinateError4[1] + coordinateError5[1] + coordinateError6[1]) / 6) ;
+
+
+    QString coordx = QString::number(x + QCursor::pos().x());
+    QString coordy = QString::number(y + QCursor::pos().y());
+
+    display->setText("(" + coordx + ", " + coordy + ")");
+   /*
+    mousePosError->setX(x + QCursor::pos().x());
+    mousePosError->setY(y + QCursor::pos().y());
+    */
+
+}
+
+void Calibration::returnToKeyboard(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Space)
+    {
+        hide();
+    }
 }

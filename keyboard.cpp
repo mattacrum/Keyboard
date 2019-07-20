@@ -305,6 +305,8 @@ void Keyboard::calibrationButtonClicked()
 
     cal.setModal(true);
     cal.exec();
+   /* QPoint *p = cal.mousePosError;
+    QCursor::setPos(p->x(),p->y());*/
     show();
 }
 
