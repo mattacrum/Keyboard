@@ -296,18 +296,38 @@ void Keyboard::calibrationButtonClicked()
 {
     calibrationFlag = 1;
     hide();
+
+    delayTimer = new QTimer(this);
+    connect(delayTimer, SIGNAL(timeout()), this, SLOT(delayTimerTimeout()));
+    if(!delayTimer->isActive())
+        delayTimer->start(1000);
+
+}
+
+void Keyboard::delayTimerTimeout()
+{
+    delayTimer->stop();
     Calibration cal;
-    timerCount = 6;
     cal.setStyleSheet("background-color:black;");
     cal.setGeometry(0,0,1400,1050);
 
-   //cal.showFullScreen();
+    cal.showFullScreen();
 
     cal.setModal(true);
     cal.exec();
+
+   // newCursorPos = (QPoint*)(200,200);//cal.mousePosError;
+
+
+    display->setText("( " + QString::number(cal.x) + " , " + QString::number(cal.y) + " )");
+    int px = mapFromGlobal(QCursor::pos()).x();
+    int py = mapFromGlobal(QCursor::pos()).y();
+
+    QCursor::setPos(cal.x + px, cal.y + py);
    /* QPoint *p = cal.mousePosError;
     QCursor::setPos(p->x(),p->y());*/
     show();
+
 }
 
 

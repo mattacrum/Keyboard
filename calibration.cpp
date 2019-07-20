@@ -24,13 +24,14 @@ Calibration::Calibration(QWidget *parent)
 
     mainLayout->addWidget(display);
 
-    timer = new QTimer(this);
-    timer->setInterval(3000);
-    timerCount = 6;
-    connect(timer, SIGNAL(timeout()), this, SLOT(timerTimeout()));
+    startTimer = new QTimer(this);
+    startTimer->setInterval(1000);
+    display->setText("Starting Calibration...");
+    connect(startTimer, SIGNAL(timeout()), this, SLOT(startTimerTimeout()));
 
-    if(!timer->isActive())
-        timer->start();
+    startTimerCount = 3;
+    if(!startTimer->isActive())
+        startTimer->start();
 }
 
 void Calibration::paintEvent(QPaintEvent *)
@@ -67,7 +68,30 @@ void Calibration::paintEvent(QPaintEvent *)
 
 }
 
-void Calibration::timerTimeout()
+void Calibration::startTimerTimeout()
+{
+    --startTimerCount;
+    if (startTimerCount <= -1)
+    {
+        startTimer->stop();
+        timer = new QTimer(this);
+        timer->setInterval(2000);
+        timerCount = 6;
+        connect(timer, SIGNAL(timeout()), this, SLOT(focusPointTimerTimeout()));
+        timer->start();
+
+       // hide();
+    }
+    else if (startTimerCount == 2)
+        display->setText("3");
+    else if (startTimerCount == 1)
+        display->setText("2");
+    else if (startTimerCount == 0)
+        display->setText("1");
+
+}
+
+void Calibration::focusPointTimerTimeout()
 {
     --timerCount;
     if (timerCount <= -1)
@@ -97,7 +121,7 @@ void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRec
 
            display->setText("(" + QString::number((int)fp1[1].center().x()) + ", " +
                             QString::number((int)fp1[1].center().y()) + ")" +
-                            " - " + "(" + QString::number(QCursor::pos().x()) + ", " +
+                            "    - " + "(" + QString::number(QCursor::pos().x()) + ", " +
                             QString::number(QCursor::pos().y()) + ")");
 
     }
@@ -116,7 +140,7 @@ void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRec
 
            display->setText("(" + QString::number((int)fp2[1].center().x()) + ", " +
                             QString::number((int)fp2[1].center().y()) + ")" +
-                            " - " + "(" + QString::number(QCursor::pos().x()) + ", " +
+                            "    - " + "(" + QString::number(QCursor::pos().x()) + ", " +
                             QString::number(QCursor::pos().y()) + ")");
     }
 
@@ -134,7 +158,7 @@ void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRec
 
            display->setText("(" + QString::number((int)fp3[1].center().x()) + ", " +
                             QString::number((int)fp3[1].center().y()) + ")" +
-                            " - " + "(" + QString::number(QCursor::pos().x()) + ", " +
+                            "    - " + "(" + QString::number(QCursor::pos().x()) + ", " +
                             QString::number(QCursor::pos().y()) + ")");
     }
 
@@ -152,7 +176,7 @@ void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRec
 
            display->setText("(" + QString::number((int)fp4[1].center().x()) + ", " +
                             QString::number((int)fp4[1].center().y()) + ")" +
-                            " - " + "(" + QString::number(QCursor::pos().x()) + ", " +
+                            "    - " + "(" + QString::number(QCursor::pos().x()) + ", " +
                             QString::number(QCursor::pos().y()) + ")");
     }
 
@@ -170,7 +194,7 @@ void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRec
 
            display->setText("(" + QString::number((int)fp5[1].center().x()) + ", " +
                             QString::number((int)fp5[1].center().y()) + ")" +
-                            " - " + "(" + QString::number(QCursor::pos().x()) + ", " +
+                            "    - " + "(" + QString::number(QCursor::pos().x()) + ", " +
                             QString::number(QCursor::pos().y()) + ")");
     }
 
@@ -188,7 +212,7 @@ void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRec
 
            display->setText("(" + QString::number((int)fp6[1].center().x()) + ", " +
                             QString::number((int)fp6[1].center().y()) + ")" +
-                            " - " + "(" + QString::number(QCursor::pos().x()) + ", " +
+                            "    - " + "(" + QString::number(QCursor::pos().x()) + ", " +
                             QString::number(QCursor::pos().y()) + ")");
     }
 
@@ -199,10 +223,10 @@ void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRec
 
 void Calibration::calibrate()
 {
-    int x = ((coordinateError1[0] + coordinateError2[0] + coordinateError3[0]
+    x = ((coordinateError1[0] + coordinateError2[0] + coordinateError3[0]
            + coordinateError4[0] + coordinateError5[0] + coordinateError6[0]) / 6) ;
 
-    int y = ((coordinateError1[1] + coordinateError2[1] + coordinateError3[1]
+    y = ((coordinateError1[1] + coordinateError2[1] + coordinateError3[1]
              + coordinateError4[1] + coordinateError5[1] + coordinateError6[1]) / 6) ;
 
 
@@ -210,10 +234,11 @@ void Calibration::calibrate()
     QString coordy = QString::number(y + QCursor::pos().y());
 
     display->setText("(" + coordx + ", " + coordy + ")");
-   /*
-    mousePosError->setX(x + QCursor::pos().x());
-    mousePosError->setY(y + QCursor::pos().y());
-    */
+
+   // mousePosError->setX(x);
+   // mousePosError->setY(y);
+    //int mpex = x + QCursor::pos().x()
+
 
 }
 

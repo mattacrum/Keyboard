@@ -30,6 +30,7 @@ private slots:
     void newLineButtonClicked();
     void calibrationButtonClicked();
     void pauseButtonClicked();
+    void delayTimerTimeout();
 
   //  void autoComplete();
 
@@ -45,7 +46,8 @@ private:
     QTextEdit *display;
     QTimer *delayTimer;
     Calibration *Cal;
-
+    QPoint *newCursorPos;
+    QCursor *cursor;
    // QKeyEvent *event;
     int timerCount;
 
