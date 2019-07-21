@@ -18,7 +18,7 @@ class Keyboard : public QWidget
 public:
    Keyboard(QWidget *parent = nullptr);
    int calibrationFlag;
-
+   //QCursor *cursor;
 
 
 private slots:
@@ -30,6 +30,8 @@ private slots:
     void newLineButtonClicked();
     void calibrationButtonClicked();
     void pauseButtonClicked();
+    void optionButtonClicked();
+    void deleteWordButtonClicked();
     void delayTimerTimeout();
 
   //  void autoComplete();
@@ -46,8 +48,8 @@ private:
     QTextEdit *display;
     QTimer *delayTimer;
     Calibration *Cal;
-    QPoint *newCursorPos;
-    QCursor *cursor;
+   // QPoint *newCursorPos;
+    //QCursor *cursor;
    // QKeyEvent *event;
     int timerCount;
 

@@ -139,6 +139,10 @@ Keyboard::Keyboard(QWidget *parent)
 
     Button *calibrationButton = createButton(tr("Calibrate"), SLOT(calibrationButtonClicked()));
 
+    Button *optionButton = createButton(tr("Options"), SLOT(optionButtonClicked()));
+
+    Button *deleteWordButton = createButton(tr("Delete Word"), SLOT(deleteWordButtonClicked()));
+
 /*
  *
  * Add Widgets to Layout
@@ -158,6 +162,8 @@ Keyboard::Keyboard(QWidget *parent)
     mainLayout->addWidget(clearAllButton, 0, 11, 1, 4);
     mainLayout->setAlignment(clearAllButton,Qt::AlignBottom);
     mainLayout->addWidget(calibrationButton, 5, 13, 1, 2);
+    mainLayout->addWidget(optionButton, 5, 11, 1, 2);
+    mainLayout->addWidget(deleteWordButton, 5, 11, 1, 2);
 
     for( int i = 0; i < NumNumberRowButtons; ++i)
     {
@@ -289,6 +295,17 @@ Button *Keyboard::createButton(const QString &text, const char *member)
     return button;
 }
 
+void Keyboard::optionButtonClicked()
+{
+
+
+}
+
+void Keyboard::deleteWordButtonClicked()
+{
+
+}
+
 
 /*  Switch to Calibration screen  */
 
@@ -323,10 +340,17 @@ void Keyboard::delayTimerTimeout()
     int px = mapFromGlobal(QCursor::pos()).x();
     int py = mapFromGlobal(QCursor::pos()).y();
 
+
+
+   // QCursor c = QWidget::cursor();
+
+   // c.setPos(mapToGlobal(QPoint(200,200)));
+   // setCursor(c);
+
+   // QPoint *p = cal.mousePosError;
+
+    showFullScreen();
     QCursor::setPos(cal.x + px, cal.y + py);
-   /* QPoint *p = cal.mousePosError;
-    QCursor::setPos(p->x(),p->y());*/
-    show();
 
 }
 
