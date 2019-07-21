@@ -14,12 +14,12 @@ public:
 
 private:
     QTimer *dwellTimer;
-    QTimer *openDelayTimer;
+   // QTimer *openDelayTimer;
     int pauseFlag;
 
 private slots:
     void dwellTimerTimeout();
-    void openDelayTimerTimeout();
+   // void openDelayTimerTimeout();
 
 protected:
 void hoverEnter(QHoverEvent *event);
