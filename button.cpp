@@ -5,12 +5,21 @@
 Button::Button(const QString &text, QWidget *parent)
     : QToolButton(parent)
 {
+    openDelayTimer = new QTimer(this);
+    connect(openDelayTimer, SIGNAL(timeout()), this, SLOT(openDelayTimerTimeout()));
+   // if(!openDelayTimer->isActive())
+   //     openDelayTimer->start(1000);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     QFont font = this->font();
     font.setPointSize(12);
     setText(text);
     setMouseTracking(true);
     setAttribute(Qt::WA_Hover);
+
+
+
+
+
 }
 
 QSize Button::sizeHint() const
@@ -32,9 +41,11 @@ void Button::hoverEnter(QHoverEvent *)
         repaint();
         dwellTimer = new QTimer(this);
         connect(dwellTimer, SIGNAL(timeout()), this, SLOT(dwellTimerTimeout()));
-
-        if(!dwellTimer->isActive())
-            dwellTimer->start(1200);
+        if (!openDelayTimer->isActive())
+        {
+            if(!dwellTimer->isActive())
+                dwellTimer->start(1200);
+        }
   //  }
 
 }
@@ -42,6 +53,14 @@ void Button::hoverEnter(QHoverEvent *)
 void Button::dwellTimerTimeout()
 {
       this->animateClick();
+    // add sound to click
+}
+
+void Button::openDelayTimerTimeout()
+{
+      openDelayTimer->stop();
+      setMouseTracking(true);
+      setAttribute(Qt::WA_Hover);
     // add sound to click
 }
 

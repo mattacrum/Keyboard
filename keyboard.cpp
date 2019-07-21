@@ -151,19 +151,19 @@ Keyboard::Keyboard(QWidget *parent)
 */
     QGridLayout *mainLayout = new QGridLayout;
 
-    mainLayout->setSizeConstraint(QLayout::SetFixedSize);
+  //  mainLayout->setSizeConstraint(QLayout::SetFixedSize);
     mainLayout->addWidget(display, 0, 0, 1, 11);
-    mainLayout->addWidget(backspaceButton, 1, 13, 1, 2);
+    mainLayout->addWidget(backspaceButton, 2, 13, 1, 2);
     mainLayout->addWidget(spacebar, 5, 3, 1, 5);
     mainLayout->addWidget(shiftButton, 5, 1, 1,2);
-    mainLayout->addWidget(pauseButton, 2, 13, 1, 2);
+    mainLayout->addWidget(pauseButton, 1, 13, 1, 2);
     mainLayout->addWidget(speakButton, 3, 13, 1, 2);
     mainLayout->addWidget(newLineButton, 4, 13, 1, 2);
     mainLayout->addWidget(clearAllButton, 0, 11, 1, 4);
     mainLayout->setAlignment(clearAllButton,Qt::AlignBottom);
     mainLayout->addWidget(calibrationButton, 5, 13, 1, 2);
-    mainLayout->addWidget(optionButton, 5, 11, 1, 2);
-    mainLayout->addWidget(deleteWordButton, 5, 11, 1, 2);
+    mainLayout->addWidget(optionButton, 3, 11, 1, 2);
+    mainLayout->addWidget(deleteWordButton, 2, 11, 1, 2);
 
     for( int i = 0; i < NumNumberRowButtons; ++i)
     {
@@ -281,11 +281,17 @@ Button *Keyboard::createButton(const QString &text, const char *member)
     if (button->text() == "Backspace")
         button->setStyleSheet("background-color: red;"
                               "color: white;");
+    if (button->text() == "Delete Word")
+        button->setStyleSheet("background-color: red;"
+                              "color: white;");
     if (button->text() == "Pause")
         button->setStyleSheet("background-color: orange;"
                               "color: white;");
     if (button->text() == "<-------")
         button->setStyleSheet("background-color: green;"
+                              "color: white;");
+    if (button->text() == "Options")
+        button->setStyleSheet("background-color: orange;"
                               "color: white;");
     if (button->text() == "Calibrate")
         button->setStyleSheet("background-color: green;"
@@ -303,7 +309,32 @@ void Keyboard::optionButtonClicked()
 
 void Keyboard::deleteWordButtonClicked()
 {
+    QString text = display->toPlainText();
+    int spaceCount = 0;
+    int charCount = 0;
 
+    for(int i = 0; i < text.length(); ++i)
+    {
+        if (text[i] == " ")
+            ++spaceCount;
+    }
+    if (spaceCount == 0)
+        text.chop(text.length());
+    for(int j = 0; j < text.length(); ++j)
+    {
+        if (spaceCount == 0)
+            ++charCount;
+        if (text[j] == " ")
+            --spaceCount;
+
+    }
+
+    text.chop(charCount+1);
+    if (text.isEmpty()) {
+        text = "";
+    }
+
+    display->setText(text);
 }
 
 
