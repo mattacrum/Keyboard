@@ -121,12 +121,13 @@ Keyboard::Keyboard(QWidget *parent)
     characterButtons[27] = createButton(tr("."), SLOT(characterClicked()));
     characterButtons[28] = createButton(tr("/"), SLOT(characterClicked()));
 
+
     Button *spacebar = createButton(tr(" "), SLOT(characterClicked()));
 
     Button *backspaceButton = createButton(tr("Backspace"), SLOT(backspaceClicked()));
     backspaceButton->setMinimumWidth(120);
 
-    Button *pauseButton = createButton(tr("Pause"), SLOT(pauseButtonClicked()));
+    pauseButton = createButton(tr("Pause"), SLOT(pauseButtonClicked()));
 
     Button *speakButton = createButton(tr("Speak"), SLOT(speakButtonClicked()));
 
@@ -260,7 +261,35 @@ void Keyboard::newLineButtonClicked()
 
 void Keyboard::pauseButtonClicked()
 {
-    //pauseFlag = 1;
+    if (pauseButton->text() == "Start")
+    {
+        pauseButton->setText(("Pause"));
+        pauseButton->setStyleSheet("background-color: orange;"
+                              "color: white;");
+        for(int i = 0; i < 28; ++i)
+        {
+            characterButtons[i]->pauseFlag = 0;
+        }
+        for(int i = 0; i < 12; ++i)
+        {
+            numberRowButtons[i]->pauseFlag = 0;
+        }
+    }
+    else if(this->pauseButton->text() == "Pause")
+    {
+        pauseButton->setText("Start");
+        pauseButton->setStyleSheet("background-color: green;"
+                              "color: white;");
+        for(int i = 0; i < 28; ++i)
+        {
+            characterButtons[i]->pauseFlag = 1;
+        }
+        for(int i = 0; i < 12; ++i)
+        {
+            numberRowButtons[i]->pauseFlag = 1;
+        }
+
+    }
 }
 
 /*  Function to create button  */
@@ -272,6 +301,7 @@ Button *Keyboard::createButton(const QString &text, const char *member)
     button->setMinimumSize(60,60);
     button->setStyleSheet("background-color: blue;"
                           "color: white;");
+    button->pauseFlag = 0;
     if (button->text() == "Speak")
         button->setStyleSheet("background-color: green;"
                               "color: white;");
@@ -320,6 +350,7 @@ void Keyboard::deleteWordButtonClicked()
     }
     if (spaceCount == 0)
         text.chop(text.length());
+    else {
     for(int j = 0; j < text.length(); ++j)
     {
         if (spaceCount == 0)
@@ -327,6 +358,7 @@ void Keyboard::deleteWordButtonClicked()
         if (text[j] == " ")
             --spaceCount;
 
+    }
     }
 
     text.chop(charCount+1);
@@ -380,7 +412,8 @@ void Keyboard::delayTimerTimeout()
 
    // QPoint *p = cal.mousePosError;
 
-    showFullScreen();
+   // showFullScreen();
+    show();
     QCursor::setPos(cal.x + px, cal.y + py);
 
 }

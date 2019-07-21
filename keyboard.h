@@ -48,9 +48,7 @@ private:
     QTextEdit *display;
     QTimer *delayTimer;
     Calibration *Cal;
-   // QPoint *newCursorPos;
-    //QCursor *cursor;
-   // QKeyEvent *event;
+    Button *pauseButton;
     int timerCount;
 
     enum { NumCharButtons = 29 };

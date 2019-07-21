@@ -9,13 +9,13 @@ class Button : public QToolButton
 
 public:
     explicit Button(const QString &text, QWidget *parent = nullptr);
-
+    int pauseFlag;
     QSize sizeHint() const override;
 
 private:
     QTimer *dwellTimer;
    // QTimer *openDelayTimer;
-    int pauseFlag;
+   // int pauseFlag;
 
 private slots:
     void dwellTimerTimeout();

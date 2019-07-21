@@ -30,17 +30,22 @@ void Button::hoverEnter(QHoverEvent *)
 {
    // if (pauseFlag == 0)
    // {
+
         QFont font = this->font();
         font.setBold(true);
         font.setPointSize(16);
         this->setFont(font);
         repaint();
         dwellTimer = new QTimer(this);
+
+        if (pauseFlag == 0)
+        {
         connect(dwellTimer, SIGNAL(timeout()), this, SLOT(dwellTimerTimeout()));
  //       if (!openDelayTimer->isActive())
      //   {
             if(!dwellTimer->isActive())
                 dwellTimer->start(1200);
+        }
      //   }
 
   //  }
