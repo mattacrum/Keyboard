@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     QCursor *cursor;
     KB.setStyleSheet("background-color: black");
     QApplication::setStyle("fusion");
-    KB.setGeometry(0, 0, 1400, 1050);
+   // KB.setGeometry(0, 0, 1400, 1050);
     //cursor = KB.cursor;
 
     KB.showFullScreen();

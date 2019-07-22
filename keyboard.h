@@ -68,6 +68,7 @@ private:
     Button *optionButton;
     Button *deleteWordButton;
 
+    QRect screenSize;
     int shiftFlag;
 
 

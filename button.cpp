@@ -166,7 +166,7 @@ void Button::hoverLeave(QHoverEvent *)
                               "border-width: 1px;"
                               "border-color: grey;");
     else if (this->text() == "Resume")
-        this->setStyleSheet("background-color: orange;"
+        this->setStyleSheet("background-color: bright green;"
                               "color: white;"
                               "border-style: outset;"
                               "border-width: 1px;"

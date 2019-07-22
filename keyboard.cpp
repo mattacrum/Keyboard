@@ -23,9 +23,11 @@ Keyboard::Keyboard(QWidget *parent)
     display->setAlignment(Qt::AlignLeft);
     display->setStyleSheet("background-color:white;"
                            "color:black;");
-    display->setMinimumHeight(100);
-    display->setMaximumHeight(300);
-    display->setMaximumWidth(1400);
+    screenSize = QApplication::desktop()->screenGeometry();
+    display->setMinimumHeight(screenSize.height()*0.3);
+    display->setMaximumHeight(screenSize.height()*0.3);
+    display->setMinimumWidth(screenSize.width()*.75);
+    //display->setMaximumWidth(screenSize.width()*.75);
     QFont font = display->font();
     font.setPointSize(font.pointSize() + 8);
     display->setFont(font);
@@ -132,7 +134,7 @@ Keyboard::Keyboard(QWidget *parent)
     speakButton = createButton(tr("Speak"), SLOT(speakButtonClicked()));
 
     clearAllButton = createButton(tr("Clear All"), SLOT(clearAllButtonClicked()));
-    clearAllButton->setMaximumHeight(60);
+    clearAllButton->setMinimumHeight(60);
 
     shiftButton = createButton(tr("Shift"), SLOT(shiftButtonClicked()));
 
@@ -156,11 +158,13 @@ Keyboard::Keyboard(QWidget *parent)
     QGridLayout *mainLayout = new QGridLayout;
 
   //  mainLayout->setSizeConstraint(QLayout::SetFixedSize);
+ //   mainLayout->setSpacing(1);
+  //  mainLayout->setVerticalSpacing(1);
     mainLayout->addWidget(display, 0, 0, 1, 11);
-    mainLayout->addWidget(backspaceButton, 2, 13, 1, 2);
+    mainLayout->addWidget(backspaceButton, 1, 13, 1, 2);
     mainLayout->addWidget(spacebar, 5, 3, 1, 5);
     mainLayout->addWidget(shiftButton, 5, 1, 1,2);
-    mainLayout->addWidget(pauseButton, 1, 13, 1, 2);
+    mainLayout->addWidget(pauseButton, 2, 13, 1, 2);
     mainLayout->addWidget(speakButton, 3, 13, 1, 2);
     mainLayout->addWidget(newLineButton, 4, 13, 1, 2);
     mainLayout->addWidget(clearAllButton, 0, 11, 1, 4);
@@ -292,7 +296,7 @@ void Keyboard::pauseButtonClicked()
     else if(this->pauseButton->text() == "Pause")
     {
         pauseButton->setText("Resume");
-        pauseButton->setStyleSheet("background-color: gold;"
+        pauseButton->setStyleSheet("background-color: cyan;"
                               "color: white;");
         for(int i = 0; i < NumCharButtons; ++i)
         {
@@ -323,7 +327,11 @@ Button *Keyboard::createButton(const QString &text, const char *member)
 {
 
     Button *button = new Button(text);
-    button->setMinimumSize(60,60);
+   // button->setMinimumSize(screenSize.width() *.065, screenSize.height()*.09);
+   // button->setMaximumSize(screenSize.width() *.065, screenSize.height()*.09);
+    //button->setMinimumWidth(60);
+   // button->setMinimumHeight(40);
+   // button->setMaximumHeight(40);
     button->setStyleSheet("background-color: blue;"
                           "color: white;"
         //                  "border-style: outset;"
