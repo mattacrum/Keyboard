@@ -122,27 +122,27 @@ Keyboard::Keyboard(QWidget *parent)
     characterButtons[28] = createButton(tr("/"), SLOT(characterClicked()));
 
 
-    Button *spacebar = createButton(tr(" "), SLOT(characterClicked()));
+    spacebar = createButton(tr(" "), SLOT(characterClicked()));
 
-    Button *backspaceButton = createButton(tr("Backspace"), SLOT(backspaceClicked()));
+    backspaceButton = createButton(tr("Backspace"), SLOT(backspaceClicked()));
     backspaceButton->setMinimumWidth(120);
 
     pauseButton = createButton(tr("Pause"), SLOT(pauseButtonClicked()));
 
-    Button *speakButton = createButton(tr("Speak"), SLOT(speakButtonClicked()));
+    speakButton = createButton(tr("Speak"), SLOT(speakButtonClicked()));
 
-    Button *clearAllButton = createButton(tr("Clear All"), SLOT(clearAllButtonClicked()));
+    clearAllButton = createButton(tr("Clear All"), SLOT(clearAllButtonClicked()));
     clearAllButton->setMaximumHeight(60);
 
-    Button *shiftButton = createButton(tr("Shift"), SLOT(shiftButtonClicked()));
+    shiftButton = createButton(tr("Shift"), SLOT(shiftButtonClicked()));
 
-    Button *newLineButton = createButton(tr("<-------"), SLOT(newLineButtonClicked()));
+    newLineButton = createButton(tr("<-------"), SLOT(newLineButtonClicked()));
 
-    Button *calibrationButton = createButton(tr("Calibrate"), SLOT(calibrationButtonClicked()));
+    calibrationButton = createButton(tr("Calibrate"), SLOT(calibrationButtonClicked()));
 
-    Button *optionButton = createButton(tr("Options"), SLOT(optionButtonClicked()));
+    optionButton = createButton(tr("Options"), SLOT(optionButtonClicked()));
 
-    Button *deleteWordButton = createButton(tr("Delete Word"), SLOT(deleteWordButtonClicked()));
+    deleteWordButton = createButton(tr("Delete Word"), SLOT(deleteWordButtonClicked()));
 
 /*
  *
@@ -266,28 +266,50 @@ void Keyboard::pauseButtonClicked()
         pauseButton->setText(("Pause"));
         pauseButton->setStyleSheet("background-color: orange;"
                               "color: white;");
-        for(int i = 0; i < 28; ++i)
+        for(int i = 0; i < NumCharButtons; ++i)
         {
             characterButtons[i]->pauseFlag = 0;
         }
-        for(int i = 0; i < 12; ++i)
+
+        for(int i = 0; i < NumNumberRowButtons; ++i)
         {
             numberRowButtons[i]->pauseFlag = 0;
         }
+
+        spacebar->pauseFlag = 0;
+        backspaceButton->pauseFlag = 0;
+        speakButton->pauseFlag = 0;
+        clearAllButton->pauseFlag = 0;
+        shiftButton->pauseFlag = 0;
+        newLineButton->pauseFlag = 0;
+        calibrationButton->pauseFlag = 0;
+        optionButton->pauseFlag = 0;
+        deleteWordButton->pauseFlag = 0;
     }
     else if(this->pauseButton->text() == "Pause")
     {
         pauseButton->setText("Start");
         pauseButton->setStyleSheet("background-color: green;"
                               "color: white;");
-        for(int i = 0; i < 28; ++i)
+        for(int i = 0; i < NumCharButtons; ++i)
         {
             characterButtons[i]->pauseFlag = 1;
         }
-        for(int i = 0; i < 12; ++i)
+
+        for(int i = 0; i < NumNumberRowButtons; ++i)
         {
             numberRowButtons[i]->pauseFlag = 1;
         }
+
+        spacebar->pauseFlag = 1;
+        backspaceButton->pauseFlag = 1;
+        speakButton->pauseFlag = 1;
+        clearAllButton->pauseFlag = 1;
+        shiftButton->pauseFlag = 1;
+        newLineButton->pauseFlag = 1;
+        calibrationButton->pauseFlag = 1;
+        optionButton->pauseFlag = 1;
+        deleteWordButton->pauseFlag = 1;
 
     }
 }
@@ -381,7 +403,6 @@ void Keyboard::calibrationButtonClicked()
     connect(delayTimer, SIGNAL(timeout()), this, SLOT(delayTimerTimeout()));
     if(!delayTimer->isActive())
         delayTimer->start(1000);
-
 }
 
 void Keyboard::delayTimerTimeout()

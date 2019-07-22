@@ -48,7 +48,7 @@ private:
     QTextEdit *display;
     QTimer *delayTimer;
     Calibration *Cal;
-    Button *pauseButton;
+
     int timerCount;
 
     enum { NumCharButtons = 29 };
@@ -56,6 +56,17 @@ private:
 
     enum { NumNumberRowButtons =  13};
     Button *numberRowButtons[NumNumberRowButtons];
+
+    Button *spacebar;
+    Button *backspaceButton;
+    Button *pauseButton;
+    Button *speakButton;
+    Button *clearAllButton;
+    Button *shiftButton;
+    Button *newLineButton;
+    Button *calibrationButton;
+    Button *optionButton;
+    Button *deleteWordButton;
 
     int shiftFlag;
 
