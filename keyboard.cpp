@@ -136,8 +136,11 @@ Keyboard::Keyboard(QWidget *parent)
 
     shiftButton = createButton(tr("Shift"), SLOT(shiftButtonClicked()));
 
-    newLineButton = createButton(tr("<-------"), SLOT(newLineButtonClicked()));
-
+    newLineButton = createButton(tr("Return"), SLOT(newLineButtonClicked()));
+   /* QCommonStyle style;
+    newLineButton->setIcon(style.standardIcon(QStyle::SP_ArrowBack));
+    newLineButton->setIconSize({80,40});
+    */
     calibrationButton = createButton(tr("Calibrate"), SLOT(calibrationButtonClicked()));
 
     optionButton = createButton(tr("Options"), SLOT(optionButtonClicked()));
@@ -261,7 +264,7 @@ void Keyboard::newLineButtonClicked()
 
 void Keyboard::pauseButtonClicked()
 {
-    if (pauseButton->text() == "Start")
+    if (pauseButton->text() == "Resume")
     {
         pauseButton->setText(("Pause"));
         pauseButton->setStyleSheet("background-color: orange;"
@@ -288,8 +291,8 @@ void Keyboard::pauseButtonClicked()
     }
     else if(this->pauseButton->text() == "Pause")
     {
-        pauseButton->setText("Start");
-        pauseButton->setStyleSheet("background-color: green;"
+        pauseButton->setText("Resume");
+        pauseButton->setStyleSheet("background-color: gold;"
                               "color: white;");
         for(int i = 0; i < NumCharButtons; ++i)
         {
@@ -322,32 +325,59 @@ Button *Keyboard::createButton(const QString &text, const char *member)
     Button *button = new Button(text);
     button->setMinimumSize(60,60);
     button->setStyleSheet("background-color: blue;"
-                          "color: white;");
+                          "color: white;"
+        //                  "border-style: outset;"
+      //                    "border-width: 1px;"
+        );//                  "border-color: grey;");
     button->pauseFlag = 0;
     if (button->text() == "Speak")
         button->setStyleSheet("background-color: green;"
-                              "color: white;");
+                              "color: white;"
+                       //       "border-style: outset;"
+                        //      "border-width: 1px;"
+                              );//"border-color: grey;");
     if (button->text() == "Clear All")
         button->setStyleSheet("background-color: red;"
-                              "color: white;");
+                              "color: white;"
+                        //      "border-style: outset;"
+                        //      "border-width: 1px;"
+                              );//"border-color: grey;");
     if (button->text() == "Backspace")
         button->setStyleSheet("background-color: red;"
-                              "color: white;");
+                              "color: white;"
+                          //    "border-style: outset;"
+                          //    "border-width: 1px;"
+                              );//"border-color: grey;");
     if (button->text() == "Delete Word")
         button->setStyleSheet("background-color: red;"
-                              "color: white;");
+                              "color: white;"
+                            //  "border-style: outset;"
+                            //  "border-width: 1px;"
+                              );//"border-color: grey;");
     if (button->text() == "Pause")
         button->setStyleSheet("background-color: orange;"
-                              "color: white;");
-    if (button->text() == "<-------")
+                              "color: white;"
+                          //    "border-style: outset;"
+                          //    "border-width: 1px;"
+                              );//"border-color: grey;");
+    if (button->text() == "Return")
         button->setStyleSheet("background-color: green;"
-                              "color: white;");
+                              "color: white;"
+                           //   "border-style: outset;"
+                           //   "border-width: 1px;"
+                              );//"border-color: grey;");
     if (button->text() == "Options")
         button->setStyleSheet("background-color: orange;"
-                              "color: white;");
+                              "color: white;"
+                           //   "border-style: outset;"
+                           //   "border-width: 1px;"
+                              );//"border-color: grey;");
     if (button->text() == "Calibrate")
         button->setStyleSheet("background-color: green;"
-                              "color: white;");
+                              "color: white;"
+                           //   "border-style: outset;"
+                           //   "border-width: 1px;"
+                              );//"border-color: grey;");*/
     connect(button, SIGNAL(clicked()), this, member);
 
     return button;
@@ -433,8 +463,8 @@ void Keyboard::delayTimerTimeout()
 
    // QPoint *p = cal.mousePosError;
 
-   // showFullScreen();
-    show();
+    showFullScreen();
+   // show();
     QCursor::setPos(cal.x + px, cal.y + py);
 
 }

@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     KB.setGeometry(0, 0, 1400, 1050);
     //cursor = KB.cursor;
 
-    KB.show();
+    KB.showFullScreen();
 
     return app.exec();
 

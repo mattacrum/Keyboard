@@ -34,6 +34,68 @@ void Button::hoverEnter(QHoverEvent *)
         QFont font = this->font();
         font.setBold(true);
         font.setPointSize(16);
+/*
+        if (this->text() == "Speak")
+            this->setStyleSheet("background-color: green;"
+                                  "color: white;"
+                                  "border-style: outset;"
+                                  "border-width: 3px;"
+                                  "border-color: grey;");
+        else if (this->text() == "Clear All")
+            this->setStyleSheet("background-color: red;"
+                                  "color: white;"
+                                  "border-style: outset;"
+                                  "border-width: 3px;"
+                                  "border-color: grey;");
+        else if (this->text() == "Backspace")
+            this->setStyleSheet("background-color: red;"
+                                  "color: white;"
+                                  "border-style: outset;"
+                                  "border-width: 3px;"
+                                  "border-color: grey;");
+        else if (this->text() == "Delete Word")
+            this->setStyleSheet("background-color: red;"
+                                  "color: white;"
+                                  "border-style: outset;"
+                                  "border-width: 3px;"
+                                  "border-color: grey;");
+        else if (this->text() == "Pause")
+            this->setStyleSheet("background-color: orange;"
+                                  "color: white;"
+                                  "border-style: outset;"
+                                  "border-width: 3px;"
+                                  "border-color: grey;");
+        else if (this->text() == "Resume")
+            this->setStyleSheet("background-color: orange;"
+                                  "color: white;"
+                                  "border-style: outset;"
+                                  "border-width: 3px;"
+                                  "border-color: grey;");
+        else if (this->text() == "Return")
+            this->setStyleSheet("background-color: green;"
+                                  "color: white;"
+                                  "border-style: outset;"
+                                  "border-width: 3px;"
+                                  "border-color: grey;");
+        else if (this->text() == "Options")
+            this->setStyleSheet("background-color: orange;"
+                                  "color: white;"
+                                  "border-style: outset;"
+                                  "border-width: 3px;"
+                                  "border-color: grey;");
+        else if (this->text() == "Calibrate")
+            this->setStyleSheet("background-color: green;"
+                                  "color: white;"
+                                  "border-style: outset;"
+                                  "border-width: 3px;"
+                                  "border-color: grey;");
+        else
+            this->setStyleSheet("background-color: blue;"
+                                  "color: white;"
+                                  "border-style: outset;"
+                                  "border-width: 3px;"
+                                  "border-color: grey;");
+*/
         this->setFont(font);
         repaint();
         dwellTimer = new QTimer(this);
@@ -73,6 +135,66 @@ void Button::hoverLeave(QHoverEvent *)
     font.setPointSize(12);
     font.setBold(false);
     this->setFont(font);
+ /*   if (this->text() == "Speak")
+        this->setStyleSheet("background-color: green;"
+                              "color: white;"
+                              "border-style: outset;"
+                              "border-width: 1px;"
+                              "border-color: grey;");
+    else if (this->text() == "Clear All")
+        this->setStyleSheet("background-color: red;"
+                              "color: white;"
+                              "border-style: outset;"
+                              "border-width: 1px;"
+                              "border-color: grey;");
+    else if (this->text() == "Backspace")
+        this->setStyleSheet("background-color: red;"
+                              "color: white;"
+                              "border-style: outset;"
+                              "border-width: 1px;"
+                              "border-color: grey;");
+    else if (this->text() == "Delete Word")
+        this->setStyleSheet("background-color: red;"
+                              "color: white;"
+                              "border-style: outset;"
+                              "border-width: 1px;"
+                              "border-color: grey;");
+    else if (this->text() == "Pause")
+        this->setStyleSheet("background-color: orange;"
+                              "color: white;"
+                              "border-style: outset;"
+                              "border-width: 1px;"
+                              "border-color: grey;");
+    else if (this->text() == "Resume")
+        this->setStyleSheet("background-color: orange;"
+                              "color: white;"
+                              "border-style: outset;"
+                              "border-width: 1px;"
+                              "border-color: grey;");
+    else if (this->text() == "Return")
+        this->setStyleSheet("background-color: green;"
+                              "color: white;"
+                              "border-style: outset;"
+                              "border-width: 1px;"
+                              "border-color: grey;");
+    else if (this->text() == "Options")
+        this->setStyleSheet("background-color: orange;"
+                              "color: white;"
+                              "border-style: outset;"
+                              "border-width: 1px;"
+                              "border-color: grey;");
+    else if (this->text() == "Calibrate")
+        this->setStyleSheet("background-color: green;"
+                              "color: white;"
+                              "border-style: outset;"
+                              "border-width: 1px;"
+                              "border-color: grey;");
+    else
+        this->setStyleSheet("background-color: blue;"
+                              "color: white;"
+                              "border-style: ridge;"
+                              "border-width: 1px;"
+                              "border-color: grey;");*/
     repaint();
 }
 
