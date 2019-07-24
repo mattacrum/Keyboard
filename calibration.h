@@ -25,7 +25,7 @@ private:
     void calibrate();
     void returnToKeyboard(QKeyEvent *event);
     QTextEdit *display;
-    int center[2];  // <--- Crashes if I comment this out?
+   // int center[2];  // <--- Crashes if I comment this out?
     void drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRectF fp4[], QRectF fp5[], QRectF fp6[]);
     QTimer *timer;
     QTimer *startTimer;

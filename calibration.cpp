@@ -78,7 +78,8 @@ void Calibration::startTimerTimeout()
         timer->setInterval(2000);
         timerCount = 6;
         connect(timer, SIGNAL(timeout()), this, SLOT(focusPointTimerTimeout()));
-        timer->start();
+        if(!timer->isActive())
+            timer->start();
 
        // hide();
     }
@@ -234,12 +235,6 @@ void Calibration::calibrate()
     QString coordy = QString::number(y + QCursor::pos().y());
 
     display->setText("(" + coordx + ", " + coordy + ")");
-
-   // mousePosError->setX(x);
-   // mousePosError->setY(y);
-    //int mpex = x + QCursor::pos().x()
-
-
 }
 
 void Calibration::returnToKeyboard(QKeyEvent *event)

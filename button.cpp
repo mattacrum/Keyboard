@@ -105,8 +105,8 @@ void Button::hoverEnter(QHoverEvent *)
         connect(dwellTimer, SIGNAL(timeout()), this, SLOT(dwellTimerTimeout()));
  //       if (!openDelayTimer->isActive())
      //   {
-            if(!dwellTimer->isActive())
-                dwellTimer->start(1200);
+        if(!dwellTimer->isActive())
+            dwellTimer->start(1200);
         }
      //   }
 
@@ -200,13 +200,6 @@ void Button::hoverLeave(QHoverEvent *)
 
 void Button::hoverMove(QHoverEvent *)
 {
-  /*  if (this->text() == "Pause")
-    {
-        if (dwellTimer->remainingTime() == 0)
-        {
-            pauseFlag = 1;
-        }
-    }*/
     QFont font = this->font();
     font.setBold(true);
     font.setPointSize(16);

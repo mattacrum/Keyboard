@@ -33,13 +33,15 @@ private slots:
     void optionButtonClicked();
     void deleteWordButtonClicked();
     void delayTimerTimeout();
-
+    void gestureTimerTimeout();
   //  void autoComplete();
 
 private:
     Button *createButton(const QString &text, const char * member);
 
     QTextToSpeech *m_speech;
+    void mouseMoveEvent(QMouseEvent* event);
+    QPoint getMousePosition();
 
    // QAbstractItemModel *modelFromFile(const QString& wordlist);
 
@@ -47,9 +49,13 @@ private:
 
     QTextEdit *display;
     QTimer *delayTimer;
+    QTimer *gestureTimer;
+    QTimer *gestureCalTimer;
     Calibration *Cal;
+    QCursor *cursor;
 
     int timerCount;
+    int gestureTimerCount;
 
     enum { NumCharButtons = 29 };
     Button *characterButtons[NumCharButtons];
@@ -70,6 +76,9 @@ private:
 
     QRect screenSize;
     int shiftFlag;
+
+    int xError;
+    int yError;
 
 
 };

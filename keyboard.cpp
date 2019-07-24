@@ -15,6 +15,9 @@ Keyboard::Keyboard(QWidget *parent)
 
 /*  Create text display  */
     calibrationFlag = 0;
+    gestureTimerCount = 4;
+    xError = 0;//this->width();
+    yError = 0;//this->height();
     //pauseFlag = 0;
     shiftFlag = 1;
     //display = new TextEdit;
@@ -31,6 +34,13 @@ Keyboard::Keyboard(QWidget *parent)
     QFont font = display->font();
     font.setPointSize(font.pointSize() + 8);
     display->setFont(font);
+
+    setMouseTracking(true);
+
+    gestureTimer = new QTimer(this);
+    gestureTimer->setInterval(3000);
+    connect(gestureTimer, SIGNAL(timeout()), this, SLOT(gestureTimerTimeout()));
+
 /*
     completer = new QCompleter(this);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
@@ -435,6 +445,8 @@ void Keyboard::deleteWordButtonClicked()
 void Keyboard::calibrationButtonClicked()
 {
     calibrationFlag = 1;
+    calibrationButton->pauseFlag = 1;
+
     hide();
 
     delayTimer = new QTimer(this);
@@ -455,28 +467,101 @@ void Keyboard::delayTimerTimeout()
     cal.setModal(true);
     cal.exec();
 
-   // newCursorPos = (QPoint*)(200,200);//cal.mousePosError;
-
-
     display->setText("( " + QString::number(cal.x) + " , " + QString::number(cal.y) + " )");
     int px = mapFromGlobal(QCursor::pos()).x();
     int py = mapFromGlobal(QCursor::pos()).y();
-
-
-
-   // QCursor c = QWidget::cursor();
-
-   // c.setPos(mapToGlobal(QPoint(200,200)));
-   // setCursor(c);
-
-   // QPoint *p = cal.mousePosError;
+    xError = cal.x;
+    yError = cal.y;
 
     showFullScreen();
+    calibrationButton->pauseFlag = 0;
    // show();
-    QCursor::setPos(cal.x + px, cal.y + py);
+
+   // cursor->setPos(cal.x + px, cal.y + py);
 
 }
 
+void Keyboard::gestureTimerTimeout()
+{
+    --gestureTimerCount;
+    if(gestureTimerCount == 3)
+    {
+        spacebar->setText("Bottom");
+        if(cursor->pos().x() != this->width())
+            gestureTimer->stop();
+    }
+
+    if(gestureTimerCount == 2)
+    {
+        spacebar->setText("Left");
+        if(cursor->pos().y() != this->height())
+            gestureTimer->stop();
+    }
+
+    if(gestureTimerCount == 1)
+    {
+        spacebar->setText("Calibrating...");
+        if(cursor->pos().x() != 0)
+            gestureTimer->stop();
+    }
+
+    if(gestureTimerCount == 0)
+    {
+        calibrationFlag = 1;
+
+        hide();
+        gestureTimer->stop();
+        gestureTimerCount = 4;
+
+        Calibration cal;
+        cal.setStyleSheet("background-color:black;");
+        cal.setGeometry(0,0,1400,1050);
+
+        cal.showFullScreen();
+
+        cal.setModal(true);
+        cal.exec();
+
+        display->setText("( " + QString::number(cal.x) + " , " + QString::number(cal.y) + " )");
+        int px = mapFromGlobal(QCursor::pos()).x();
+        int py = mapFromGlobal(QCursor::pos()).y();
+        xError = cal.x;
+        yError = cal.y;
+
+        showFullScreen();
+     //   gestureCalTimer = new QTimer(this);
+      //  connect(gestureCalTimer, SIGNAL(timeout()), this, SLOT(delayTimerTimeout()));
+      //  if(!delayTimer->isActive())
+        //    delayTimer->start(2000);
+
+    }
+}
+void Keyboard::mouseMoveEvent(QMouseEvent *event)
+{
+    display->setText("(" + QString::number(cursor->pos().x()) + ", " + QString::number(cursor->pos().y()) + ")");
+   // display->setText("(" + QString::number(xError) + ", " + QString::number(yError) + ")");
+    int px = getMousePosition().x();//mapFromGlobal(cursor->pos()).x();
+    int py = getMousePosition().y();//mapFromGlobal(cursor->pos()).y();
+  //  QPointF x;
+   // x.setX(px + xError);
+   // x.setY(py + yError);
+//event->setLocalPos(x);
+    if (cursor->pos().y() <= 0)
+    {
+    //    if()
+        spacebar->setText("Look to the Right");
+        if(!gestureTimer->isActive())
+            gestureTimer->start();
+    }
+    // Set cursor position to corrdinates + error
+
+ //   setMouseTracking(true);
+}
+
+QPoint Keyboard::getMousePosition()
+{
+    return cursor->pos();
+}
 
 
 
