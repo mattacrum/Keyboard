@@ -98,6 +98,7 @@ void Calibration::focusPointTimerTimeout()
     if (timerCount <= -1)
     {
         timer->stop();
+        timerCount = 6;
         calibrate();
         hide();
     }

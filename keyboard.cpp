@@ -488,21 +488,34 @@ void Keyboard::gestureTimerTimeout()
     {
         spacebar->setText("Bottom");
         if(cursor->pos().x() != this->width())
+        {
+            gestureTimerCount = 4;
+            spacebar->setText("");
             gestureTimer->stop();
+        }
+
     }
 
     if(gestureTimerCount == 2)
     {
         spacebar->setText("Left");
         if(cursor->pos().y() != this->height())
+        {
+            spacebar->setText("");
+            gestureTimerCount = 4;
             gestureTimer->stop();
+        }
     }
 
     if(gestureTimerCount == 1)
     {
         spacebar->setText("Calibrating...");
         if(cursor->pos().x() != 0)
+        {
+            spacebar->setText("");
+            gestureTimerCount = 4;
             gestureTimer->stop();
+        }
     }
 
     if(gestureTimerCount == 0)
@@ -512,6 +525,7 @@ void Keyboard::gestureTimerTimeout()
         hide();
         gestureTimer->stop();
         gestureTimerCount = 4;
+        spacebar->setText("");
 
         Calibration cal;
         cal.setStyleSheet("background-color:black;");
