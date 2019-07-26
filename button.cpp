@@ -116,6 +116,7 @@ void Button::hoverEnter(QHoverEvent *)
 
 void Button::dwellTimerTimeout()
 {
+    if(dwellTimer->isActive())
       this->animateClick();
     // add sound to click
 }
