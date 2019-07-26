@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <string>
 #include <cmath>
+#include <QSound>
 
 const int MAX_LENGTH = 200;
 
@@ -552,7 +553,7 @@ void Keyboard::gestureTimerTimeout()
 }
 void Keyboard::mouseMoveEvent(QMouseEvent *event)
 {
-    display->setText("(" + QString::number(cursor->pos().x()) + ", " + QString::number(cursor->pos().y()) + ")");
+   // display->setText("(" + QString::number(cursor->pos().x()) + ", " + QString::number(cursor->pos().y()) + ")");
    // display->setText("(" + QString::number(xError) + ", " + QString::number(yError) + ")");
     int px = getMousePosition().x();//mapFromGlobal(cursor->pos()).x();
     int py = getMousePosition().y();//mapFromGlobal(cursor->pos()).y();

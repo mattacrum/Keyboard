@@ -2,19 +2,23 @@
 
 #include <QtWidgets>
 #include <QTimer>
+#include <QSound>
+
 Button::Button(const QString &text, QWidget *parent)
     : QToolButton(parent)
 {
-   // openDelayTimer = new QTimer(this);
-  //  connect(openDelayTimer, SIGNAL(timeout()), this, SLOT(openDelayTimerTimeout()));
-   // if(!openDelayTimer->isActive())
-   //     openDelayTimer->start(1000);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     QFont font = this->font();
     font.setPointSize(12);
     setText(text);
     setMouseTracking(true);
     setAttribute(Qt::WA_Hover);
+
+/* Click Sound for Buttons */
+    buttonClick.setSource(QUrl::fromLocalFile("://clickSound.wav"));
+    buttonClick.setVolume(0.55f);
+    connect(this, &QPushButton::clicked, &buttonClick, &QSoundEffect::play);
+
 
 }
 
@@ -28,8 +32,6 @@ QSize Button::sizeHint() const
 
 void Button::hoverEnter(QHoverEvent *)
 {
-   // if (pauseFlag == 0)
-   // {
 
         QFont font = this->font();
         font.setBold(true);
@@ -103,21 +105,19 @@ void Button::hoverEnter(QHoverEvent *)
         if (pauseFlag == 0)
         {
         connect(dwellTimer, SIGNAL(timeout()), this, SLOT(dwellTimerTimeout()));
- //       if (!openDelayTimer->isActive())
-     //   {
+
         if(!dwellTimer->isActive())
             dwellTimer->start(1200);
         }
-     //   }
-
-  //  }
-
 }
 
 void Button::dwellTimerTimeout()
 {
     if(dwellTimer->isActive())
-      this->animateClick();
+    {
+        this->animateClick();
+    }
+
     // add sound to click
 }
 /*
