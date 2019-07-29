@@ -544,11 +544,6 @@ void Keyboard::gestureTimerTimeout()
         yError = cal.y;
 
         showFullScreen();
-     //   gestureCalTimer = new QTimer(this);
-      //  connect(gestureCalTimer, SIGNAL(timeout()), this, SLOT(delayTimerTimeout()));
-      //  if(!delayTimer->isActive())
-        //    delayTimer->start(2000);
-
     }
 }
 void Keyboard::mouseMoveEvent(QMouseEvent *event)

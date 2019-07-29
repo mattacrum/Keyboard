@@ -50,7 +50,7 @@ private:
     QTextEdit *display;
     QTimer *delayTimer;
     QTimer *gestureTimer;
-    QTimer *gestureCalTimer;
+
     Calibration *Cal;
     QCursor *cursor;
 
