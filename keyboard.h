@@ -34,6 +34,9 @@ private slots:
     void deleteWordButtonClicked();
     void delayTimerTimeout();
     void gestureTimerTimeout();
+    void symbolButtonClicked();
+    void yesButtonClicked();
+    void noButtonClicked();
   //  void autoComplete();
 
 private:
@@ -73,6 +76,9 @@ private:
     Button *calibrationButton;
     Button *optionButton;
     Button *deleteWordButton;
+    Button *symbolButton;
+    Button *yesButton;
+    Button *noButton;
 
     QRect screenSize;
     int shiftFlag;

@@ -29,6 +29,11 @@ Calibration::Calibration(QWidget *parent)
     display->setText("Starting Calibration...");
     connect(startTimer, SIGNAL(timeout()), this, SLOT(startTimerTimeout()));
 
+    timer = new QTimer(this);
+    timer->setInterval(2000);
+    connect(timer, SIGNAL(timeout()), this, SLOT(focusPointTimerTimeout()));
+    timerCount = 6;
+
     startTimerCount = 3;
     if(!startTimer->isActive())
         startTimer->start();
@@ -74,10 +79,8 @@ void Calibration::startTimerTimeout()
     if (startTimerCount <= -1)
     {
         startTimer->stop();
-        timer = new QTimer(this);
-        timer->setInterval(2000);
         timerCount = 6;
-        connect(timer, SIGNAL(timeout()), this, SLOT(focusPointTimerTimeout()));
+
         if(!timer->isActive())
             timer->start();
 
@@ -160,8 +163,8 @@ void Calibration::drawFocusPoints(QRectF fp1[], QRectF fp2[], QRectF fp3[], QRec
 
            display->setText("(" + QString::number((int)fp3[1].center().x()) + ", " +
                             QString::number((int)fp3[1].center().y()) + ")" +
-                            "    - " + "(" + QString::number(QCursor::pos().x()) + ", " +
-                            QString::number(QCursor::pos().y()) + ")");
+                            "    - " + "(" + QString::number(mapFromGlobal(QCursor::pos()).x()) + ", " +
+                            QString::number(mapFromGlobal(QCursor::pos()).y()) + ")");
     }
 
     if (timerCount == 2)

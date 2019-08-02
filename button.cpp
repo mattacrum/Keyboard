@@ -9,7 +9,7 @@ Button::Button(const QString &text, QWidget *parent)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     QFont font = this->font();
-    font.setPointSize(12);
+    font.setPointSize(18);
     setText(text);
     setMouseTracking(true);
     setAttribute(Qt::WA_Hover);
@@ -35,7 +35,7 @@ void Button::hoverEnter(QHoverEvent *)
 
         QFont font = this->font();
         font.setBold(true);
-        font.setPointSize(16);
+        font.setPointSize(20);
 /*
         if (this->text() == "Speak")
             this->setStyleSheet("background-color: green;"
@@ -113,12 +113,11 @@ void Button::hoverEnter(QHoverEvent *)
 
 void Button::dwellTimerTimeout()
 {
-    if(dwellTimer->isActive())
-    {
+    //if(dwellTimer->isActive())
+   // {
         this->animateClick();
-    }
-
-    // add sound to click
+   // }
+    dwellTimer->stop();
 }
 /*
 void Button::openDelayTimerTimeout()
@@ -133,7 +132,7 @@ void Button::hoverLeave(QHoverEvent *)
 {
     dwellTimer->stop();
     QFont font = this->font();
-    font.setPointSize(12);
+    font.setPointSize(18);
     font.setBold(false);
     this->setFont(font);
  /*   if (this->text() == "Speak")
@@ -203,7 +202,7 @@ void Button::hoverMove(QHoverEvent *)
 {
     QFont font = this->font();
     font.setBold(true);
-    font.setPointSize(16);
+    font.setPointSize(20);
     this->setFont(font);
     repaint();
 }

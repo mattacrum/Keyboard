@@ -27,7 +27,8 @@ Keyboard::Keyboard(QWidget *parent)
     display->setAlignment(Qt::AlignLeft);
     display->setStyleSheet("background-color:white;"
                            "color:black;");
-    screenSize = QApplication::desktop()->screenGeometry();
+    screenSize = QApplication::desktop()->availableGeometry();
+   // screenSize = QGuiApplication::screens()
     display->setMinimumHeight(screenSize.height()*0.3);
     display->setMaximumHeight(screenSize.height()*0.3);
     display->setMinimumWidth(screenSize.width()*.75);
@@ -160,6 +161,11 @@ Keyboard::Keyboard(QWidget *parent)
 
     deleteWordButton = createButton(tr("Delete Word"), SLOT(deleteWordButtonClicked()));
 
+    symbolButton = createButton(tr("Symbols"), SLOT(symbolButtonClicked()));
+
+    yesButton = createButton(tr("Yes"), SLOT(yesButtonClicked()));
+    noButton = createButton(tr("No"), SLOT(noButtonClicked()));
+
 /*
  *
  * Add Widgets to Layout
@@ -183,6 +189,9 @@ Keyboard::Keyboard(QWidget *parent)
     mainLayout->addWidget(calibrationButton, 5, 13, 1, 2);
     mainLayout->addWidget(optionButton, 3, 11, 1, 2);
     mainLayout->addWidget(deleteWordButton, 2, 11, 1, 2);
+    mainLayout->addWidget(symbolButton, 5, 8);
+    mainLayout->addWidget(yesButton, 4, 9);
+    mainLayout->addWidget(noButton, 5, 9);
 
     for( int i = 0; i < NumNumberRowButtons; ++i)
     {
@@ -218,12 +227,14 @@ void Keyboard::characterClicked()
     display->setText(display->toPlainText() + QString::fromStdString(characterValue));
 
     if (shiftFlag == 1)
+    {
         for (int i = 0; i < 26; ++i)
         {
             QString text = characterButtons[i]->text();
             characterButtons[i]->setText(text.toLower());
-            shiftFlag = 0;
         }
+        shiftFlag = 0;
+    }
 }
 
 void Keyboard::backspaceClicked()
@@ -251,12 +262,14 @@ void Keyboard::speakButtonClicked()
 void Keyboard::shiftButtonClicked()
 {
     if (shiftFlag == 1)
+    {
         for (int i = 0; i < 26; ++i)
         {
             QString text = characterButtons[i]->text();
             characterButtons[i]->setText(text.toLower());
-            shiftFlag = 1;
         }
+        shiftFlag = 0;
+    }
     else
     {
         shiftFlag = 1;
@@ -332,12 +345,107 @@ void Keyboard::pauseButtonClicked()
     }
 }
 
+void Keyboard::symbolButtonClicked()
+{
+    if(symbolButton->text() == "Symbols")
+    {
+        characterButtons[0]->setText("[");
+        characterButtons[1]->setText("]");
+        characterButtons[2]->setText("{");
+        characterButtons[3]->setText("}");
+        characterButtons[4]->setText("#");
+        characterButtons[5]->setText("%");
+        characterButtons[6]->setText("^");
+        characterButtons[7]->setText("*");
+        characterButtons[8]->setText("_");
+        characterButtons[9]->setText("\\");
+        characterButtons[10]->setText("~");
+        characterButtons[11]->setText("<");
+        characterButtons[12]->setText(">");
+        characterButtons[13]->setText(":");
+        characterButtons[14]->setText(";");
+        characterButtons[15]->setText("(");
+        characterButtons[16]->setText(")");
+        characterButtons[17]->setText("|");
+        characterButtons[18]->setText("?");
+        characterButtons[19]->setText("!");
+        characterButtons[20]->setText(".");
+        characterButtons[21]->setText(",");
+        characterButtons[22]->setText("'");
+        characterButtons[23]->setText("\"");
+        characterButtons[24]->setText("$");
+        characterButtons[25]->setText("@");
+        characterButtons[26]->setText("");
+        characterButtons[27]->setText("");
+        characterButtons[28]->setText("");
+
+        symbolButton->setText("ABC");
+    }
+    else
+    {
+        characterButtons[0]->setText("A");
+        characterButtons[1]->setText("B");
+        characterButtons[2]->setText("C");
+        characterButtons[3]->setText("D");
+        characterButtons[4]->setText("E");
+        characterButtons[5]->setText("F");
+        characterButtons[6]->setText("G");
+        characterButtons[7]->setText("H");
+        characterButtons[8]->setText("I");
+        characterButtons[9]->setText("J");
+        characterButtons[10]->setText("K");
+        characterButtons[11]->setText("L");
+        characterButtons[12]->setText("M");
+        characterButtons[13]->setText("N");
+        characterButtons[14]->setText("O");
+        characterButtons[15]->setText("P");
+        characterButtons[16]->setText("Q");
+        characterButtons[17]->setText("R");
+        characterButtons[18]->setText("S");
+        characterButtons[19]->setText("T");
+        characterButtons[20]->setText("U");
+        characterButtons[21]->setText("V");
+        characterButtons[22]->setText("W");
+        characterButtons[23]->setText("X");
+        characterButtons[24]->setText("Y");
+        characterButtons[25]->setText("Z");
+        characterButtons[26]->setText(",");
+        characterButtons[27]->setText(".");
+        characterButtons[28]->setText("/");
+
+        if (shiftFlag == 0)
+        {
+            shiftFlag = 1;
+            this->shiftButtonClicked();
+        }
+
+        symbolButton->setText("Symbols");
+    }
+
+
+}
+
+void Keyboard::yesButtonClicked()
+{
+    m_speech = new QTextToSpeech(this);
+    m_speech->say("Yes");
+}
+
+void Keyboard::noButtonClicked()
+{
+    m_speech = new QTextToSpeech(this);
+    m_speech->say("No");
+}
+
 /*  Function to create button  */
 
 Button *Keyboard::createButton(const QString &text, const char *member)
 {
 
     Button *button = new Button(text);
+    QFont font = button->font();
+    font.setPointSize(18);
+    button->setFont(font);
    // button->setMinimumSize(screenSize.width() *.065, screenSize.height()*.09);
    // button->setMaximumSize(screenSize.width() *.065, screenSize.height()*.09);
     //button->setMinimumWidth(60);
@@ -397,6 +505,24 @@ Button *Keyboard::createButton(const QString &text, const char *member)
                            //   "border-style: outset;"
                            //   "border-width: 1px;"
                               );//"border-color: grey;");*/
+    if (button->text() == "Symbols")
+        button->setStyleSheet("background-color: orange;"
+                              "color: white;"
+                       //       "border-style: outset;"
+                        //      "border-width: 1px;"
+                              );//"border-color: grey;");
+    if (button->text() == "Yes")
+        button->setStyleSheet("background-color: purple;"
+                              "color: white;"
+                           //   "border-style: outset;"
+                           //   "border-width: 1px;"
+                              );//"border-color: grey;");*/
+    if (button->text() == "No")
+        button->setStyleSheet("background-color: purple;"
+                              "color: white;"
+                       //       "border-style: outset;"
+                        //      "border-width: 1px;"
+                              );//"border-color: grey;");
     connect(button, SIGNAL(clicked()), this, member);
 
     return button;
@@ -488,7 +614,7 @@ void Keyboard::gestureTimerTimeout()
     if(gestureTimerCount == 3)
     {
         spacebar->setText("Bottom");
-        if(cursor->pos().x() != this->width())
+        if(cursor->pos().x() < this->width())
         {
             gestureTimerCount = 4;
             spacebar->setText("");
@@ -550,15 +676,15 @@ void Keyboard::mouseMoveEvent(QMouseEvent *event)
 {
    // display->setText("(" + QString::number(cursor->pos().x()) + ", " + QString::number(cursor->pos().y()) + ")");
    // display->setText("(" + QString::number(xError) + ", " + QString::number(yError) + ")");
-    int px = getMousePosition().x();//mapFromGlobal(cursor->pos()).x();
-    int py = getMousePosition().y();//mapFromGlobal(cursor->pos()).y();
+    int px = mapFromGlobal(cursor->pos()).x();
+    int py = mapFromGlobal(cursor->pos()).y();
+   // display->setText("(" + QString::number(px) + ", " + QString::number(py) + ")");
   //  QPointF x;
    // x.setX(px + xError);
    // x.setY(py + yError);
 //event->setLocalPos(x);
     if (cursor->pos().y() <= 0)
     {
-    //    if()
         spacebar->setText("Look to the Right");
         if(!gestureTimer->isActive())
             gestureTimer->start();
