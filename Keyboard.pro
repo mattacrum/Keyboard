@@ -7,6 +7,7 @@
 QT       += core gui
 QT       += multimedia
 QT       += texttospeech
+QT += concurrent
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -30,13 +31,20 @@ SOURCES += \
         button.cpp \
         calibration.cpp \
         main.cpp \
+<<<<<<< HEAD
         keyboard.cpp
        #  textedit.cpp
+=======
+        keyboard.cpp \
+ \      #  textedit.cpp
+    socketconnection.cpp
+>>>>>>> e3265337fa22adc8119254fb95ff353e3c074620
 
 HEADERS += \
         button.h \
         calibration.h \
-        keyboard.h
+        keyboard.h \
+        socketconnection.h
         # textedit.h
 
 # Default rules for deployment.

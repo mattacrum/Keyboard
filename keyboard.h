@@ -6,6 +6,7 @@
 #include <QTextToSpeech>
 #include "textedit.h"
 #include "calibration.h"
+#include "socketconnection.h"
 
 class QTextEdit;
 
@@ -55,7 +56,7 @@ private:
     QTextEdit *textPrediction;
     QTimer *delayTimer;
     QTimer *gestureTimer;
-
+    //socketConnection *SC = new socketConnection();
     Calibration *Cal;
     QCursor *cursor;
 
