@@ -32,7 +32,7 @@ Keyboard::Keyboard(QWidget *parent)
     display->setMinimumHeight(screenSize.height()*0.3);
     display->setMaximumHeight(screenSize.height()*0.3);
     display->setMinimumWidth(screenSize.width()*.75);
-    //display->setMaximumWidth(screenSize.width()*.75);
+   // display->setMaximumWidth(screenSize.width()*.75);
     QFont font = display->font();
     font.setPointSize(font.pointSize() + 8);
     display->setFont(font);
@@ -134,12 +134,15 @@ Keyboard::Keyboard(QWidget *parent)
     characterButtons[26] = createButton(tr(","), SLOT(characterClicked()));
     characterButtons[27] = createButton(tr("."), SLOT(characterClicked()));
     characterButtons[28] = createButton(tr("/"), SLOT(characterClicked()));
+    characterButtons[29] = createButton(tr("!"), SLOT(characterClicked()));
+    characterButtons[30] = createButton(tr("?"), SLOT(characterClicked()));
+    characterButtons[31] = createButton(tr("@"), SLOT(characterClicked()));
 
 
     spacebar = createButton(tr(" "), SLOT(characterClicked()));
 
     backspaceButton = createButton(tr("Backspace"), SLOT(backspaceClicked()));
-    backspaceButton->setMinimumWidth(120);
+    backspaceButton->setMinimumWidth(110);
 
     pauseButton = createButton(tr("Pause"), SLOT(pauseButtonClicked()));
 
@@ -163,8 +166,17 @@ Keyboard::Keyboard(QWidget *parent)
 
     symbolButton = createButton(tr("Symbols"), SLOT(symbolButtonClicked()));
 
+    numbersButton = createButton(tr("123"), SLOT(numbersButtonClicked()));
+
     yesButton = createButton(tr("Yes"), SLOT(yesButtonClicked()));
     noButton = createButton(tr("No"), SLOT(noButtonClicked()));
+
+    textPrediction = new QTextEdit("");
+    textPrediction->setReadOnly(true);
+    textPrediction->setAlignment(Qt::AlignLeft);
+    textPrediction->setStyleSheet("background-color:white;"
+                           "color:black;");
+    textPrediction->setMinimumWidth(230);
 
 /*
  *
@@ -173,35 +185,39 @@ Keyboard::Keyboard(QWidget *parent)
  *
 */
     QGridLayout *mainLayout = new QGridLayout;
-
   //  mainLayout->setSizeConstraint(QLayout::SetFixedSize);
  //   mainLayout->setSpacing(1);
   //  mainLayout->setVerticalSpacing(1);
-    mainLayout->addWidget(display, 0, 0, 1, 11);
-    mainLayout->addWidget(backspaceButton, 1, 13, 1, 2);
+    mainLayout->addWidget(display, 0, 0, 1, 10);
+    mainLayout->addWidget(textPrediction, 1, 0, 5, 2);
+    mainLayout->addWidget(backspaceButton, 1, 11);
+    mainLayout->addWidget(pauseButton, 2, 11);
+    mainLayout->addWidget(speakButton, 3, 10, 1, 2);
+    mainLayout->addWidget(newLineButton, 4, 11);
+    mainLayout->addWidget(calibrationButton, 5, 11);
     mainLayout->addWidget(spacebar, 5, 3, 1, 5);
-    mainLayout->addWidget(shiftButton, 5, 1, 1,2);
-    mainLayout->addWidget(pauseButton, 2, 13, 1, 2);
-    mainLayout->addWidget(speakButton, 3, 13, 1, 2);
-    mainLayout->addWidget(newLineButton, 4, 13, 1, 2);
-    mainLayout->addWidget(clearAllButton, 0, 11, 1, 4);
-    mainLayout->setAlignment(clearAllButton,Qt::AlignBottom);
-    mainLayout->addWidget(calibrationButton, 5, 13, 1, 2);
-    mainLayout->addWidget(optionButton, 3, 11, 1, 2);
-    mainLayout->addWidget(deleteWordButton, 2, 11, 1, 2);
+    mainLayout->addWidget(shiftButton, 5, 2, 1,1);
     mainLayout->addWidget(symbolButton, 5, 8);
-    mainLayout->addWidget(yesButton, 4, 9);
-    mainLayout->addWidget(noButton, 5, 9);
+    mainLayout->addWidget(numbersButton,5,9);
+    mainLayout->addWidget(clearAllButton, 0, 10, 1, 2);
+    mainLayout->setAlignment(clearAllButton,Qt::AlignBottom);
+    mainLayout->addWidget(deleteWordButton, 1, 10);
+    mainLayout->addWidget(optionButton,2, 10);
 
+    mainLayout->addWidget(yesButton, 4, 10);
+    mainLayout->addWidget(noButton, 5, 10);
+
+
+/*
     for( int i = 0; i < NumNumberRowButtons; ++i)
     {
         mainLayout->addWidget(numberRowButtons[i], 1, i);
     }
-
+*/
     for( int i = 0; i < NumCharButtons; ++i)
     {
-        int row = (i / 10)+2;
-        int column = ((i) % 10);
+        int row = (i / 8) + 1;
+        int column = ((i) % 8) + 2;
         mainLayout->addWidget(characterButtons[i], row, column);
     }
 
@@ -349,6 +365,7 @@ void Keyboard::symbolButtonClicked()
 {
     if(symbolButton->text() == "Symbols")
     {
+        numbersButton->hide();
         characterButtons[0]->setText("[");
         characterButtons[1]->setText("]");
         characterButtons[2]->setText("{");
@@ -369,20 +386,21 @@ void Keyboard::symbolButtonClicked()
         characterButtons[17]->setText("|");
         characterButtons[18]->setText("?");
         characterButtons[19]->setText("!");
-        characterButtons[20]->setText(".");
-        characterButtons[21]->setText(",");
-        characterButtons[22]->setText("'");
-        characterButtons[23]->setText("\"");
+        characterButtons[20]->setText("'");
+        characterButtons[21]->setText("\"");
+        characterButtons[22]->setText("");
+        characterButtons[23]->setText("");
         characterButtons[24]->setText("$");
         characterButtons[25]->setText("@");
-        characterButtons[26]->setText("");
-        characterButtons[27]->setText("");
-        characterButtons[28]->setText("");
+        characterButtons[26]->setText(",");
+        characterButtons[27]->setText(".");
+        characterButtons[28]->setText("/");
 
         symbolButton->setText("ABC");
     }
     else
     {
+        numbersButton->show();
         characterButtons[0]->setText("A");
         characterButtons[1]->setText("B");
         characterButtons[2]->setText("C");
@@ -421,6 +439,86 @@ void Keyboard::symbolButtonClicked()
 
         symbolButton->setText("Symbols");
     }
+}
+
+void Keyboard::numbersButtonClicked()
+{
+    if(numbersButton->text() == "123")
+    {
+        symbolButton->hide();
+        characterButtons[0]->setText("1");
+        characterButtons[1]->setText("2");
+        characterButtons[2]->setText("3");
+        characterButtons[3]->setText("4");
+        characterButtons[4]->setText("5");
+        characterButtons[5]->setText("6");
+        characterButtons[6]->setText("7");
+        characterButtons[7]->setText("8");
+        characterButtons[8]->setText("9");
+        characterButtons[9]->setText("0");
+        characterButtons[10]->setText("-");
+        characterButtons[11]->setText("+");
+        characterButtons[12]->setText("=");
+        characterButtons[13]->setText(":");
+        characterButtons[14]->setText(";");
+        characterButtons[15]->setText("(");
+        characterButtons[16]->setText(")");
+        characterButtons[17]->setText("|");
+        characterButtons[18]->setText("?");
+        characterButtons[19]->setText("!");
+        characterButtons[20]->setText("~");
+        characterButtons[21]->setText("<");
+        characterButtons[22]->setText(">");
+        characterButtons[23]->setText("\"");
+        characterButtons[24]->setText("$");
+        characterButtons[25]->setText("@");
+        characterButtons[26]->setText(",");
+        characterButtons[27]->setText(".");
+        characterButtons[28]->setText("/");
+
+        numbersButton->setText("ABC");
+    }
+    else
+    {
+        symbolButton->show();
+        characterButtons[0]->setText("A");
+        characterButtons[1]->setText("B");
+        characterButtons[2]->setText("C");
+        characterButtons[3]->setText("D");
+        characterButtons[4]->setText("E");
+        characterButtons[5]->setText("F");
+        characterButtons[6]->setText("G");
+        characterButtons[7]->setText("H");
+        characterButtons[8]->setText("I");
+        characterButtons[9]->setText("J");
+        characterButtons[10]->setText("K");
+        characterButtons[11]->setText("L");
+        characterButtons[12]->setText("M");
+        characterButtons[13]->setText("N");
+        characterButtons[14]->setText("O");
+        characterButtons[15]->setText("P");
+        characterButtons[16]->setText("Q");
+        characterButtons[17]->setText("R");
+        characterButtons[18]->setText("S");
+        characterButtons[19]->setText("T");
+        characterButtons[20]->setText("U");
+        characterButtons[21]->setText("V");
+        characterButtons[22]->setText("W");
+        characterButtons[23]->setText("X");
+        characterButtons[24]->setText("Y");
+        characterButtons[25]->setText("Z");
+        characterButtons[26]->setText(",");
+        characterButtons[27]->setText(".");
+        characterButtons[28]->setText("/");
+
+        if (shiftFlag == 0)
+        {
+            shiftFlag = 1;
+            this->shiftButtonClicked();
+        }
+
+        numbersButton->setText("123");
+    }
 
 
 }
@@ -448,7 +546,7 @@ Button *Keyboard::createButton(const QString &text, const char *member)
     button->setFont(font);
    // button->setMinimumSize(screenSize.width() *.065, screenSize.height()*.09);
    // button->setMaximumSize(screenSize.width() *.065, screenSize.height()*.09);
-    //button->setMinimumWidth(60);
+    button->setMinimumWidth(110);
    // button->setMinimumHeight(40);
    // button->setMaximumHeight(40);
     button->setStyleSheet("background-color: blue;"
@@ -506,6 +604,12 @@ Button *Keyboard::createButton(const QString &text, const char *member)
                            //   "border-width: 1px;"
                               );//"border-color: grey;");*/
     if (button->text() == "Symbols")
+        button->setStyleSheet("background-color: orange;"
+                              "color: white;"
+                       //       "border-style: outset;"
+                        //      "border-width: 1px;"
+                              );//"border-color: grey;");
+    if (button->text() == "123")
         button->setStyleSheet("background-color: orange;"
                               "color: white;"
                        //       "border-style: outset;"

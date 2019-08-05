@@ -23,10 +23,11 @@ Calibration::Calibration(QWidget *parent)
     display->setMaximumSize(120,60);
 
     mainLayout->addWidget(display);
+    display->setText("Starting Calibration...");
 
     startTimer = new QTimer(this);
     startTimer->setInterval(1000);
-    display->setText("Starting Calibration...");
+
     connect(startTimer, SIGNAL(timeout()), this, SLOT(startTimerTimeout()));
 
     timer = new QTimer(this);

@@ -35,6 +35,7 @@ private slots:
     void delayTimerTimeout();
     void gestureTimerTimeout();
     void symbolButtonClicked();
+    void numbersButtonClicked();
     void yesButtonClicked();
     void noButtonClicked();
   //  void autoComplete();
@@ -51,6 +52,7 @@ private:
    // QCompleter *completer;
 
     QTextEdit *display;
+    QTextEdit *textPrediction;
     QTimer *delayTimer;
     QTimer *gestureTimer;
 
@@ -60,7 +62,7 @@ private:
     int timerCount;
     int gestureTimerCount;
 
-    enum { NumCharButtons = 29 };
+    enum { NumCharButtons = 32 };
     Button *characterButtons[NumCharButtons];
 
     enum { NumNumberRowButtons =  13};
@@ -77,6 +79,7 @@ private:
     Button *optionButton;
     Button *deleteWordButton;
     Button *symbolButton;
+    Button *numbersButton;
     Button *yesButton;
     Button *noButton;
 

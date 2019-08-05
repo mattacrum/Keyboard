@@ -19,7 +19,8 @@ Button::Button(const QString &text, QWidget *parent)
     buttonClick.setVolume(0.55f);
     connect(this, &QPushButton::clicked, &buttonClick, &QSoundEffect::play);
 
-
+    dwellTimer = new QTimer(this);
+    connect(dwellTimer, SIGNAL(timeout()), this, SLOT(dwellTimerTimeout()));
 }
 
 QSize Button::sizeHint() const
@@ -100,34 +101,19 @@ void Button::hoverEnter(QHoverEvent *)
 */
         this->setFont(font);
         repaint();
-        dwellTimer = new QTimer(this);
 
         if (pauseFlag == 0)
         {
-        connect(dwellTimer, SIGNAL(timeout()), this, SLOT(dwellTimerTimeout()));
-
-        if(!dwellTimer->isActive())
-            dwellTimer->start(1200);
+            if(!dwellTimer->isActive())
+                dwellTimer->start(1200);
         }
 }
 
 void Button::dwellTimerTimeout()
 {
-    //if(dwellTimer->isActive())
-   // {
-        this->animateClick();
-   // }
-    dwellTimer->stop();
+      this->animateClick();
 }
-/*
-void Button::openDelayTimerTimeout()
-{
-      openDelayTimer->stop();
-   //   setMouseTracking(true);
-   //   setAttribute(Qt::WA_Hover);
-    // add sound to click
-}
-*/
+
 void Button::hoverLeave(QHoverEvent *)
 {
     dwellTimer->stop();
