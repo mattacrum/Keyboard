@@ -1,20 +1,28 @@
 #include "keyboard.h"
 #include "calibration.h"
 #include "textedit.h"
+#include "socketconnection.h"
 #include <QApplication>
+#include <QDataStream>
+#include <QLocalSocket>
+#include <iostream>
+#include <QVector>
+#include <QtConcurrent>
 
 int main(int argc, char *argv[])
 {
-   // Q_INIT_RESOURCE(customcompleter);
     QApplication app(argc, argv);
     Keyboard KB;
     QCursor *cursor;
     KB.setStyleSheet("background-color: black");
     QApplication::setStyle("fusion");
-   // KB.setGeometry(0, 0, 1400, 1050);
-    //cursor = KB.cursor;
 
-    KB.showFullScreen();
+    socketConnection* socket = new socketConnection();
+
+    KB.show();
+
+    //socketConnection *SC = new socketConnection();
+
 
     return app.exec();
 

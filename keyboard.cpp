@@ -2,6 +2,7 @@
 #include "keyboard.h"
 #include "textedit.h"
 //#include "calibration.h"
+#include "socketconnection.h"
 #include <QtWidgets>
 #include <QWidget>
 #include <string>
@@ -15,6 +16,8 @@ Keyboard::Keyboard(QWidget *parent)
 {
 
 /*  Create text display  */
+
+
     calibrationFlag = 0;
     gestureTimerCount = 4;
     xError = 0;//this->width();
@@ -43,14 +46,7 @@ Keyboard::Keyboard(QWidget *parent)
     gestureTimer->setInterval(3000);
     connect(gestureTimer, SIGNAL(timeout()), this, SLOT(gestureTimerTimeout()));
 
-/*
-    completer = new QCompleter(this);
-    completer->setCaseSensitivity(Qt::CaseInsensitive);
-    completer->setModel(modelFromFile(":/resources/wordlist.txt"));
-    completer->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
-    completer->setWrapAround(false);
-    display->setCompleter(completer);
-*/
+
 
 /*
  *
@@ -223,6 +219,8 @@ Keyboard::Keyboard(QWidget *parent)
 
     setLayout(mainLayout);
     setWindowTitle(tr("Keyboard"));
+
+
 }
 
 /*
@@ -796,6 +794,13 @@ void Keyboard::mouseMoveEvent(QMouseEvent *event)
     // Set cursor position to corrdinates + error
 
  //   setMouseTracking(true);
+    //QVector<float> coordinates = SC->receiveData();
+    /*if(coordinates.size() == 2)
+    {
+        display->setText(QString::number(coordinates[0]) + " " + QString::number(coordinates[1]));
+    }*/
+
+
 }
 
 QPoint Keyboard::getMousePosition()
