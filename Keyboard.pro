@@ -30,8 +30,8 @@ SOURCES += \
         button.cpp \
         calibration.cpp \
         main.cpp \
-        keyboard.cpp \
-      #  textedit.cpp
+        keyboard.cpp
+       #  textedit.cpp
 
 HEADERS += \
         button.h \

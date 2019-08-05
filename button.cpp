@@ -105,7 +105,7 @@ void Button::hoverEnter(QHoverEvent *)
         if (pauseFlag == 0)
         {
             if(!dwellTimer->isActive())
-                dwellTimer->start(1200);
+                dwellTimer->start(800);
         }
 }
 
