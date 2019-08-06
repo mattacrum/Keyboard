@@ -17,10 +17,11 @@ int main(int argc, char *argv[])
     KB.setStyleSheet("background-color: black");
     QApplication::setStyle("fusion");
 
-    socketConnection* socket = new socketConnection();
+    socketConnection socket;
+
 
     KB.show();
-
+    socket.doConnect();
     //socketConnection *SC = new socketConnection();
 
 
