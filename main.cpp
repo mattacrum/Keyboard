@@ -19,11 +19,9 @@ int main(int argc, char *argv[])
 
     socketConnection socket;
 
-
     KB.show();
-    socket.doConnect();
-    //socketConnection *SC = new socketConnection();
 
+    socket.doConnect();
 
     return app.exec();
 

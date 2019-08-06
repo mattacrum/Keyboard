@@ -15,19 +15,18 @@ class socketConnection : public QObject
 public:
     explicit socketConnection(QObject *parent = 0);
    // socketConnection();
-    QVector<float> receiveData();
     float x, y, z;
-
+    QLocalSocket* socket;
     void doConnect();
 
 public slots:
-    void connected();
+    bool connected();
     void disconnected();
     void bytesWritten(qint64 bytes);
     void readyRead();
 
 private:
-    QLocalSocket* socket;
+
     QDataStream socketStream;
 
 };
