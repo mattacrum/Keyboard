@@ -27,6 +27,7 @@ private slots:
     void backspaceClicked();
     void speakButtonClicked();
     void clearAllButtonClicked();
+    void minimizeButtonClicked();
     void shiftButtonClicked();
     void newLineButtonClicked();
     void calibrationButtonClicked();
@@ -83,6 +84,7 @@ private:
     Button *numbersButton;
     Button *yesButton;
     Button *noButton;
+    Button *minimizeButton;
 
     QRect screenSize;
     int shiftFlag;

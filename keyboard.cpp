@@ -41,7 +41,7 @@ Keyboard::Keyboard(QWidget *parent)
     display->setFont(font);
 
     setMouseTracking(true);
-
+  //  showFullScreen();
     gestureTimer = new QTimer(this);
     gestureTimer->setInterval(3000);
     connect(gestureTimer, SIGNAL(timeout()), this, SLOT(gestureTimerTimeout()));
@@ -146,6 +146,7 @@ Keyboard::Keyboard(QWidget *parent)
 
     clearAllButton = createButton(tr("Clear All"), SLOT(clearAllButtonClicked()));
     clearAllButton->setMinimumHeight(60);
+    minimizeButton = createButton(tr("Minimize"), SLOT(minimizeButtonClicked()));
 
     shiftButton = createButton(tr("Shift"), SLOT(shiftButtonClicked()));
 
@@ -196,7 +197,10 @@ Keyboard::Keyboard(QWidget *parent)
     mainLayout->addWidget(symbolButton, 5, 8);
     mainLayout->addWidget(numbersButton,5,9);
     mainLayout->addWidget(clearAllButton, 0, 10, 1, 2);
+    mainLayout->addWidget(minimizeButton, 0, 10, 1, 2);
+
     mainLayout->setAlignment(clearAllButton,Qt::AlignBottom);
+    mainLayout->setAlignment(minimizeButton,Qt::AlignTop);
     mainLayout->addWidget(deleteWordButton, 1, 10);
     mainLayout->addWidget(optionButton,2, 10);
 
@@ -266,6 +270,10 @@ void Keyboard::clearAllButtonClicked()
     display->setText("");
 }
 
+void Keyboard::minimizeButtonClicked()
+{
+    showMinimized();
+}
 void Keyboard::speakButtonClicked()
 {
     m_speech = new QTextToSpeech(this);
@@ -703,7 +711,7 @@ void Keyboard::delayTimerTimeout()
     //xError = cal.x;
     //yError = cal.y;
 
-    show();
+    showFullScreen();
     //calibrationButton->pauseFlag = 0;
    // show();
 
@@ -717,7 +725,7 @@ void Keyboard::gestureTimerTimeout()
     if(gestureTimerCount == 3)
     {
         spacebar->setText("Bottom");
-        if(cursor->pos().x() < this->width())
+        if(cursor->pos().x() <= this->width()-10)
         {
             gestureTimerCount = 4;
             spacebar->setText("");
@@ -729,7 +737,7 @@ void Keyboard::gestureTimerTimeout()
     if(gestureTimerCount == 2)
     {
         spacebar->setText("Left");
-        if(cursor->pos().y() != this->height())
+        if(cursor->pos().y() <= this->height()-10)
         {
             spacebar->setText("");
             gestureTimerCount = 4;

@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
 
 
-    KB.show();
+    KB.showFullScreen();
 
     socketConn.doConnect();
 
