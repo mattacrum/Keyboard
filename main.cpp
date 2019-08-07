@@ -2,12 +2,15 @@
 #include "calibration.h"
 #include "textedit.h"
 #include "socketconnection.h"
+#include "global.h"
 #include <QApplication>
 #include <QDataStream>
 #include <QLocalSocket>
 #include <iostream>
 #include <QVector>
 #include <QtConcurrent>
+
+
 
 int main(int argc, char *argv[])
 {
@@ -17,11 +20,11 @@ int main(int argc, char *argv[])
     KB.setStyleSheet("background-color: black");
     QApplication::setStyle("fusion");
 
-    socketConnection socket;
+
 
     KB.show();
 
-    socket.doConnect();
+    socketConn.doConnect();
 
     return app.exec();
 

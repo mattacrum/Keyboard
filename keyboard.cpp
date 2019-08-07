@@ -694,16 +694,17 @@ void Keyboard::delayTimerTimeout()
     cal.showFullScreen();
 
     cal.setModal(true);
+
     cal.exec();
 
-    display->setText("( " + QString::number(cal.x) + " , " + QString::number(cal.y) + " )");
+    //display->setText("( " + QString::number(cal.x) + " , " + QString::number(cal.y) + " )");
     int px = mapFromGlobal(QCursor::pos()).x();
     int py = mapFromGlobal(QCursor::pos()).y();
-    xError = cal.x;
-    yError = cal.y;
+    //xError = cal.x;
+    //yError = cal.y;
 
-    showFullScreen();
-    calibrationButton->pauseFlag = 0;
+    show();
+    //calibrationButton->pauseFlag = 0;
    // show();
 
    // cursor->setPos(cal.x + px, cal.y + py);
@@ -765,11 +766,11 @@ void Keyboard::gestureTimerTimeout()
         cal.setModal(true);
         cal.exec();
 
-        display->setText("( " + QString::number(cal.x) + " , " + QString::number(cal.y) + " )");
+        //display->setText("( " + QString::number(cal.x) + " , " + QString::number(cal.y) + " )");
         int px = mapFromGlobal(QCursor::pos()).x();
         int py = mapFromGlobal(QCursor::pos()).y();
-        xError = cal.x;
-        yError = cal.y;
+        //xError = cal.x;
+        //yError = cal.y;
 
         showFullScreen();
     }

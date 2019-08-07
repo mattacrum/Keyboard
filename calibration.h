@@ -6,6 +6,10 @@
 #include <QWidget>
 #include <QtWidgets>
 #include <QDialog>
+#include <QtConcurrent>
+#include "global.h"
+#include "mousecontrol.h"
+
 
 class Calibration : public QDialog
 {
@@ -13,9 +17,10 @@ class Calibration : public QDialog
 
 public:
     Calibration(QWidget *parent = nullptr);
-    QPoint *mousePosError;
-    int x;
-    int y;
+    mouseControl* mouse;
+    float a;
+    float b;
+
 private slots:
     void startTimerTimeout();
     void focusPointTimerTimeout();
@@ -34,12 +39,16 @@ private:
     QCursor *cursor;
     QGridLayout *mainLayout;
 
-    int coordinateError1[2];
-    int coordinateError2[2];
-    int coordinateError3[2];
-    int coordinateError4[2];
-    int coordinateError5[2];
-    int coordinateError6[2];
+    float a1;
+    float b1;
+    float a2;
+    float b2;
+    float x1;
+    float x2;
+    float y1;
+    float y2;
+
+
 };
 
 #endif // CALIBRATION_H

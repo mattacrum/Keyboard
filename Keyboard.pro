@@ -31,15 +31,19 @@ CONFIG += c++11
 SOURCES += \
         button.cpp \
         calibration.cpp \
+    global.cpp \
         main.cpp \
         keyboard.cpp \
  \      #  textedit.cpp
+    mousecontrol.cpp \
     socketconnection.cpp
 
 HEADERS += \
         button.h \
         calibration.h \
+        global.h \
         keyboard.h \
+        mousecontrol.h \
         socketconnection.h
         # textedit.h
 
